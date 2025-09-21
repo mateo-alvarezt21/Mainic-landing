@@ -1,0 +1,21 @@
+{
+  "name": "Mainic Software Services",
+  "short_name": "Mainic",
+  "description": "Automatiza tu negocio con soluciones de software de vanguardia. Desarrollo personalizado, análisis de datos y automatización de procesos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111618",
+  "theme_color": "#1193d4",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
