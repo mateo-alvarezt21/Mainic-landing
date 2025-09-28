@@ -1,7 +1,6 @@
 'use client'
 
 import { motion, useScroll, useTransform, useMotionValue, animate } from 'framer-motion'
-import Image from 'next/image'
 import { Button } from '@/components/ui/Button'
 import { ArrowRight, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -82,15 +81,7 @@ export function Hero() {
         className="absolute inset-0"
         style={{ y: yFast, scale, rotateX: rotate }}
       >
-        <Image
-          src="https://images.unsplash.com/photo-1625314887424-9f190599bd56?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Tecnología futurista y códigos"
-          fill
-          className="object-cover"
-          priority
-          quality={75}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-dark-900/80 via-dark-800/70 to-dark-900/80" />
+        <div className="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900" />
         <div className="absolute inset-0 bg-gradient-radial from-primary-500/20 via-transparent to-transparent" />
       </motion.div>
 
@@ -190,10 +181,29 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.3) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 8px 32px rgba(255,255,255,0.1))',
+              textShadow: '0 0 40px rgba(255,255,255,0.3)'
+            }}
           >
             Automatiza tu{' '}
             <span className="relative inline-block">
-              <span className="gradient-text">Éxito</span>
+              <span 
+                className="gradient-text"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(17,147,212,0.9) 0%, rgba(139,92,246,0.8) 50%, rgba(6,214,160,0.7) 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 8px 32px rgba(17,147,212,0.3))'
+                }}
+              >
+                Éxito
+              </span>
               <motion.div
                 className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-purple-500"
                 initial={{ scaleX: 0 }}
@@ -215,6 +225,7 @@ export function Hero() {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
+                filter: 'drop-shadow(0 4px 16px rgba(139,92,246,0.4))'
               }}
             >
               Inteligente

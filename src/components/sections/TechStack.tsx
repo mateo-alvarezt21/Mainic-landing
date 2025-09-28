@@ -3,60 +3,41 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { 
-  Code2, 
-  Server, 
   Cloud, 
-  Database, 
-  Cpu, 
-  Globe, 
-  Container,
   Zap,
   Brain,
-  BarChart3,
-  TableProperties,
-  Monitor
+  BarChart3
 } from 'lucide-react'
+import { SectionDiffuser } from '@/components/ui/SectionDiffuser'
 
-const technologies = [
+const benefits = [
   {
-    category: 'Frontend',
+    title: 'Automatización Inteligente',
+    description: 'Eliminamos tareas repetitivas y optimizamos procesos empresariales',
+    icon: Zap,
     color: 'from-blue-500 to-cyan-500',
-    techs: [
-      { name: 'React', icon: Code2, color: 'text-blue-400' },
-      { name: 'Next.js', icon: Globe, color: 'text-gray-300' },
-      { name: 'TypeScript', icon: Code2, color: 'text-blue-500' },
-      { name: 'Tailwind', icon: Monitor, color: 'text-cyan-400' }
-    ]
+    iconColor: 'text-blue-400'
   },
   {
-    category: 'Backend',
+    title: 'Análisis de Datos Avanzado',
+    description: 'Convertimos datos en decisiones estratégicas para su negocio',
+    icon: BarChart3,
     color: 'from-green-500 to-emerald-500',
-    techs: [
-      { name: 'Node.js', icon: Server, color: 'text-green-400' },
-      { name: 'Python', icon: Cpu, color: 'text-yellow-400' },
-      { name: 'PostgreSQL', icon: Database, color: 'text-blue-300' },
-      { name: 'MongoDB', icon: Database, color: 'text-green-500' }
-    ]
+    iconColor: 'text-green-400'
   },
   {
-    category: 'Cloud & DevOps',
+    title: 'Infraestructura Escalable',
+    description: 'Soluciones que crecen con su empresa sin comprometer el rendimiento',
+    icon: Cloud,
     color: 'from-orange-500 to-red-500',
-    techs: [
-      { name: 'AWS', icon: Cloud, color: 'text-orange-400' },
-      { name: 'Docker', icon: Container, color: 'text-blue-400' },
-      { name: 'Kubernetes', icon: Zap, color: 'text-blue-300' },
-      { name: 'Vercel', icon: Globe, color: 'text-gray-300' }
-    ]
+    iconColor: 'text-orange-400'
   },
   {
-    category: 'AI & Analytics',
+    title: 'Inteligencia Artificial',
+    description: 'Implementamos IA para automatizar decisiones y mejorar la eficiencia',
+    icon: Brain,
     color: 'from-purple-500 to-pink-500',
-    techs: [
-      { name: 'TensorFlow', icon: Brain, color: 'text-orange-400' },
-      { name: 'OpenAI', icon: Brain, color: 'text-green-400' },
-      { name: 'Tableau', icon: BarChart3, color: 'text-blue-400' },
-      { name: 'Power BI', icon: TableProperties, color: 'text-yellow-400' }
-    ]
+    iconColor: 'text-purple-400'
   }
 ]
 
@@ -117,7 +98,7 @@ export function TechStack() {
         <div className="w-full h-full bg-gradient-to-br from-orange-500/20 to-red-500/20 transform rotate-45"></div>
       </motion.div>
       
-      <div className="container mx-auto relative z-10">
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -126,53 +107,45 @@ export function TechStack() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Tecnologías de <span className="gradient-text">Vanguardia</span>
+            Soluciones que <span className="gradient-text">Impulsan</span> su Negocio
           </h2>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Utilizamos las herramientas más avanzadas del mercado para crear 
-            soluciones robustas, escalables y de alto rendimiento.
+            Transformamos sus desafíos empresariales en oportunidades de crecimiento 
+            con tecnología de vanguardia enfocada en resultados.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {technologies.map((category, categoryIndex) => (
+          {benefits.map((benefit, index) => (
             <motion.div
-              key={category.category}
+              key={benefit.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-dark-700 rounded-2xl p-6 border border-gray-600 hover:border-primary-500 transition-colors"
+              className="bg-dark-700 rounded-2xl p-8 border border-gray-600 hover:border-primary-500 transition-all duration-300 hover:transform hover:scale-105"
             >
-              <h3 className="text-xl font-bold mb-6 text-center">{category.category}</h3>
-              
-              <div className="grid grid-cols-2 gap-4">
-                {category.techs.map((tech, techIndex) => (
-                  <motion.div
-                    key={tech.name}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ 
-                      duration: 0.4, 
-                      delay: (categoryIndex * 0.1) + (techIndex * 0.05) 
-                    }}
-                    viewport={{ once: true }}
-                    className="flex flex-col items-center p-3 bg-dark-900/50 rounded-lg hover:bg-dark-900 transition-colors cursor-pointer"
-                  >
-                    <div className="w-10 h-10 mb-2 relative">
-                      <div className={`w-10 h-10 bg-gradient-to-br ${category.color} rounded-lg flex items-center justify-center shadow-lg`}>
-                        <tech.icon className={`w-6 h-6 ${tech.color}`} />
-                      </div>
-                    </div>
-                    <span className="text-sm text-gray-300 text-center">{tech.name}</span>
-                  </motion.div>
-                ))}
+              <div className="text-center">
+                <div className={`w-16 h-16 bg-gradient-to-br ${benefit.color} rounded-xl flex items-center justify-center mx-auto mb-6 shadow-lg`}>
+                  <benefit.icon className={`w-8 h-8 ${benefit.iconColor}`} />
+                </div>
+                
+                <h3 className="text-xl font-bold mb-4 text-white">{benefit.title}</h3>
+                
+                <p className="text-gray-400 leading-relaxed">{benefit.description}</p>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+      
+      {/* Diffuser transition to Services section */}
+      <SectionDiffuser 
+        fromColor="#111618" 
+        toColor="#0f172a" 
+        variant="curve"
+        height="md"
+      />
     </section>
   )
 }

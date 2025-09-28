@@ -1,10 +1,10 @@
 'use client'
 
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
-import { ArrowRight, TrendingUp } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { ArrowRight, Play, Award, Zap } from 'lucide-react'
+import { SectionDiffuser } from '@/components/ui/SectionDiffuser'
 
 const cases = [
   {
@@ -53,128 +53,356 @@ const cases = [
 
 export function Cases() {
   const ref = useRef(null)
+  const [currentCase, setCurrentCase] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   })
+
+  // Auto-advance cases every 6 seconds
+  useEffect(() => {
+    if (!isAutoPlaying) return
+
+    const interval = setInterval(() => {
+      setCurrentCase((prev) => (prev + 1) % cases.length)
+    }, 6000)
+
+    return () => clearInterval(interval)
+  }, [isAutoPlaying])
+
+  // Pause auto-play when user manually selects a case
+  const handleManualCaseSelect = (index: number) => {
+    setCurrentCase(index)
+    setIsAutoPlaying(false)
+    
+    // Resume auto-play after 10 seconds of inactivity
+    setTimeout(() => {
+      setIsAutoPlaying(true)
+    }, 10000)
+  }
   
-  const yBackground = useTransform(scrollYProgress, [0, 1], [100, -100])
-  const rotateCards = useTransform(scrollYProgress, [0, 1], [0, 5])
-  const scaleCards = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.02, 0.95])
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50])
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3])
 
   return (
-    <section ref={ref} id="cases" className="py-20 bg-dark-900 relative overflow-hidden">
-      {/* Parallax background elements */}
-      <motion.div 
-        className="absolute inset-0 opacity-10"
-        style={{ y: yBackground }}
-      >
-        <div className="absolute top-20 right-20 w-40 h-40 border border-primary-500/30 rounded-full" />
-        <div className="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-blue-500/20 transform rotate-45" />
-        <div className="absolute top-1/2 left-1/2 w-24 h-24 border-2 border-green-500/30 transform -rotate-12" />
-      </motion.div>
-      
-      <div className="container mx-auto relative z-10">
+    <section ref={ref} id="cases" className="py-12 md:py-16 bg-slate-900 relative overflow-hidden">
+      {/* Enhanced Background */}
+      <div className="absolute inset-0">
+        {/* Animated grid */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-800/50 to-slate-700/50">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              radial-gradient(circle at 20% 30%, #dc2626/15 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, #7c3aed/15 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, #059669/10 0%, transparent 50%),
+              linear-gradient(90deg, transparent 49%, #475569 50%, transparent 51%),
+              linear-gradient(0deg, transparent 49%, #475569 50%, transparent 51%)
+            `,
+            backgroundSize: '120px 120px, 120px 120px, 140px 140px, 60px 60px, 60px 60px',
+            opacity: 0.4
+          }} />
+        </div>
+        
+        {/* Success particles */}
+        <motion.div 
+          className="absolute inset-0"
+          style={{ y, opacity }}
+        >
+          {[
+            { left: 19.4, top: 8.1, delay: 0.5, duration: 4.2 },
+            { left: 53.2, top: 76.4, delay: 1.2, duration: 5.1 },
+            { left: 85.5, top: 78.6, delay: 0.8, duration: 4.8 },
+            { left: 61.3, top: 64.7, delay: 2.1, duration: 4.5 },
+            { left: 54.6, top: 57.1, delay: 0.3, duration: 5.3 },
+            { left: 19.1, top: 78.7, delay: 1.8, duration: 4.1 },
+            { left: 61.8, top: 47.8, delay: 0.9, duration: 4.9 },
+            { left: 34.0, top: 39.8, delay: 1.5, duration: 4.7 },
+            { left: 40.6, top: 60.5, delay: 0.6, duration: 5.2 },
+            { left: 5.1, top: 9.0, delay: 2.3, duration: 4.3 },
+            { left: 69.9, top: 67.9, delay: 1.1, duration: 4.6 },
+            { left: 34.8, top: 81.4, delay: 0.4, duration: 5.0 },
+            { left: 27.0, top: 81.3, delay: 1.9, duration: 4.4 },
+            { left: 62.8, top: 30.3, delay: 0.7, duration: 4.8 },
+            { left: 20.4, top: 31.2, delay: 1.6, duration: 4.2 }
+          ].map((particle, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-emerald-400/60 rounded-full"
+              style={{
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.3, 1, 0.3],
+                scale: [1, 1.5, 1]
+              }}
+              transition={{
+                duration: particle.duration,
+                repeat: Infinity,
+                delay: particle.delay
+              }}
+            />
+          ))}
+        </motion.div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Casos de <span className="gradient-text">Éxito</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+            <Award className="w-4 h-4 text-emerald-400" />
+            <span className="text-emerald-300 text-sm font-medium">Casos de Éxito</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <span className="text-white">Historias de </span>
+            <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Transformación Real
+            </span>
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Descubre cómo hemos ayudado a empresas como la tuya a alcanzar sus objetivos 
-            y superar sus expectativas.
+          <p className="text-lg md:text-xl text-slate-400 max-w-4xl mx-auto leading-relaxed">
+            Más que números y métricas, estas son historias reales de empresas que confiaron en nosotros 
+            y transformaron completamente sus operaciones.
           </p>
         </motion.div>
 
-        <div className="space-y-16">
-          {cases.map((caseStudy, index) => (
+        {/* Timeline Navigation */}
+        <div className="flex justify-center mb-8 md:mb-10">
+          <div className="flex flex-wrap justify-center gap-2 bg-slate-800/40 backdrop-blur-xl rounded-2xl p-2 border border-slate-600/30">
+            {cases.map((caseStudy, index) => (
+              <button
+                key={caseStudy.id}
+                onClick={() => handleManualCaseSelect(index)}
+                className={`px-4 md:px-6 py-2 md:py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  currentCase === index
+                    ? 'bg-gradient-to-r from-emerald-500 to-blue-500 text-white shadow-lg'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                }`}
+              >
+                {caseStudy.company}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Current Case Display */}
+        <motion.div
+          key={currentCase}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-7xl mx-auto"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Image */}
             <motion.div
-              key={caseStudy.id}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className={`flex flex-col ${
-                index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-              } gap-12 items-center`}
-              style={{ 
-                rotate: `${rotateCards.get() * (index % 2 === 0 ? 1 : -1)}deg`,
-                scale: scaleCards.get()
-              }}
+              className="relative order-2 lg:order-1"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              {/* Image */}
-              <div className="flex-1 relative">
-                <div className="relative overflow-hidden rounded-2xl">
-                  <Image
-                    src={caseStudy.image}
-                    alt={`${caseStudy.company} case study`}
-                    width={600}
-                    height={400}
-                    className="w-full h-auto object-cover"
-                    style={{ height: '400px' }}
-                  />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${caseStudy.color} opacity-20`} />
+              <div className="relative overflow-hidden rounded-2xl md:rounded-3xl group">
+                <Image
+                  src={cases[currentCase].image}
+                  alt={cases[currentCase].company}
+                  width={600}
+                  height={400}
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                  style={{ height: '280px', minHeight: '280px' }}
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t ${cases[currentCase].color} opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
+                
+                {/* Overlay pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20" />
+                
+                {/* Success badge */}
+                <div className="absolute top-4 left-4 bg-emerald-500/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-2">
+                  <Award className="w-3 h-3 text-white" />
+                  <span className="text-white text-xs font-medium">Éxito Comprobado</span>
                 </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 space-y-6">
-                <div>
-                  <h3 className="text-sm font-semibold text-primary-400 uppercase tracking-wider mb-2">
-                    {caseStudy.company}
-                  </h3>
-                  <h4 className="text-3xl font-bold mb-4">{caseStudy.title}</h4>
-                  <p className="text-gray-400 text-lg leading-relaxed">
-                    {caseStudy.description}
-                  </p>
-                </div>
-
-                {/* Results */}
-                <div className="grid grid-cols-3 gap-4">
-                  {caseStudy.results.map((result, resultIndex) => (
-                    <div key={resultIndex} className="text-center">
-                      <div className="flex items-center justify-center mb-2">
-                        <TrendingUp className="w-5 h-5 text-primary-500 mr-2" />
-                        <span className="text-2xl font-bold text-primary-400">
-                          {result.metric}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-400">{result.description}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Technologies */}
-                <div>
-                  <h5 className="text-sm font-semibold text-gray-300 mb-3">
-                    Tecnologías utilizadas:
-                  </h5>
-                  <div className="flex flex-wrap gap-2">
-                    {caseStudy.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-3 py-1 bg-dark-700 text-sm text-gray-300 rounded-full border border-gray-600"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <Button variant="outline" className="group">
-                  Ver Caso Completo
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
               </div>
             </motion.div>
-          ))}
+
+            {/* Content */}
+            <motion.div
+              className="space-y-4 md:space-y-6 order-1 lg:order-2"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              {/* Chapter indicator */}
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse" />
+                <span className="text-emerald-400 font-semibold text-sm uppercase tracking-wider">
+                  Caso de Estudio {currentCase + 1} de {cases.length}
+                </span>
+              </div>
+
+              {/* Title */}
+              <div className="space-y-3 md:space-y-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider mb-2 md:mb-3">
+                    {cases[currentCase].company}
+                  </h3>
+                  <h4 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4 text-white leading-tight">
+                    {cases[currentCase].title}
+                  </h4>
+                </div>
+                <p className="text-slate-300 text-base md:text-lg leading-relaxed">
+                  {cases[currentCase].description}
+                </p>
+              </div>
+
+              {/* Results - Enhanced */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+                {cases[currentCase].results.map((result, index) => (
+                  <motion.div
+                    key={index}
+                    className="relative p-3 md:p-4 bg-slate-800/40 backdrop-blur-xl rounded-xl border border-slate-600/30 hover:border-emerald-500/50 transition-all duration-300 group"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
+                    whileHover={{ y: -2 }}
+                  >
+                    {/* Success indicator */}
+                    <div className="absolute top-2 right-2 w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                    
+                    <div className="text-center">
+                      <div className="text-xl md:text-2xl font-bold text-emerald-400 mb-1 group-hover:scale-110 transition-transform duration-300">
+                        {result.metric}
+                      </div>
+                      <div className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+                        {result.description}
+                      </div>
+                    </div>
+                    
+                    {/* Hover glow */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Technologies */}
+              <div className="space-y-4">
+                <h5 className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-blue-400" />
+                  Tecnologías Implementadas:
+                </h5>
+                <div className="flex flex-wrap gap-2">
+                  {cases[currentCase].technologies.map((tech, index) => (
+                    <motion.span
+                      key={index}
+                      className="px-3 py-1.5 bg-slate-700/50 backdrop-blur-sm text-xs md:text-sm text-slate-300 rounded-full border border-slate-600/50 hover:border-blue-500/50 hover:bg-slate-600/50 transition-all duration-300"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.7 + index * 0.05 }}
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                <button className="group flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-500 hover:to-blue-500 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
+                  <Play className="w-4 h-4" />
+                  <span>Ver Historia Completa</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </button>
+                
+                <button className="group flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-600/50 hover:border-slate-500/80 text-slate-300 hover:text-white transition-all duration-300">
+                  <span>Solicitar Demo</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Enhanced Progress Dots */}
+        <div className="flex justify-center mt-8 md:mt-10">
+          <div className="flex items-center gap-3 bg-slate-800/40 backdrop-blur-sm rounded-full px-4 py-2 border border-slate-600/30">
+            {cases.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleManualCaseSelect(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  currentCase === index 
+                    ? 'bg-emerald-400 scale-150 shadow-lg shadow-emerald-400/50' 
+                    : 'bg-slate-500 hover:bg-slate-400'
+                }`}
+              />
+            ))}
+            <div className="w-px h-4 bg-slate-600 mx-2" />
+            <span className="text-xs text-slate-400">
+              {currentCase + 1} / {cases.length}
+            </span>
+            {isAutoPlaying && (
+              <>
+                <div className="w-px h-4 bg-slate-600 mx-2" />
+                <div className="flex items-center gap-2">
+                  <motion.div 
+                    className="w-2 h-2 bg-emerald-400/60 rounded-full"
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.6, 1, 0.6]
+                    }}
+                    transition={{ 
+                      duration: 1.5, 
+                      repeat: Infinity 
+                    }}
+                  />
+                  <span className="text-xs text-emerald-400/80">Auto</span>
+                </div>
+              </>
+            )}
+          </div>
         </div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          className="text-center mt-8 md:mt-12 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+        >
+          <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-slate-600/30">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+              ¿Tu empresa será la próxima historia de éxito?
+            </h3>
+            <p className="text-slate-400 mb-6 text-sm md:text-base">
+              Únete a las empresas que ya han transformado sus operaciones con nuestras soluciones.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="group px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-500 hover:to-blue-500 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-3 justify-center">
+                <span>Iniciar mi Transformación</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </button>
+              <button className="group px-8 py-4 rounded-xl bg-slate-700/50 hover:bg-slate-600/50 border border-slate-600/50 hover:border-slate-500/50 text-slate-300 hover:text-white transition-all duration-300 flex items-center gap-3 justify-center">
+                <Award className="w-5 h-5" />
+                <span>Ver Más Casos</span>
+              </button>
+            </div>
+          </div>
+        </motion.div>
       </div>
+      
+      {/* Diffuser transition to next section */}
+      <SectionDiffuser 
+        fromColor="#0f172a" 
+        toColor="#020617" 
+        variant="wave"
+        height="md"
+      />
     </section>
   )
 }

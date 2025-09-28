@@ -49,12 +49,12 @@ export default function HomePage() {
       <Header />
       
       {/* Main content */}
-      <main className="overflow-hidden">
+      <main className="overflow-hidden px-4 sm:px-6">
         <Hero />
         <Clients />
-        <Services />
-        <TechStack />
         <Cases />
+        <TechStack />
+        <Services />
         <Stats />
         <Testimonials />
         <Contact />
