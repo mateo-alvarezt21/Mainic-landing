@@ -23,7 +23,7 @@ const MobileMenuItem = memo(({ label, onClick, index }: MobileMenuItemProps) => 
       transition: {
         delay: index * 0.08,
         duration: 0.4,
-        ease: [0.6, -0.05, 0.01, 0.99]
+        ease: [0.6, -0.05, 0.01, 0.99] as const
       }
     },
     exit: {
@@ -94,7 +94,7 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
       scale: 1,
       transition: {
         duration: 0.3,
-        ease: [0.6, -0.05, 0.01, 0.99],
+        ease: [0.6, -0.05, 0.01, 0.99] as const,
         staggerChildren: 0.08,
         delayChildren: 0.1
       }
@@ -105,7 +105,7 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
       scale: 0.98,
       transition: {
         duration: 0.2,
-        ease: 'easeIn'
+        ease: 'easeIn' as const
       }
     }
   }
@@ -135,7 +135,7 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
       transition: {
         delay: navItems.length * 0.08 + 0.2,
         duration: 0.4,
-        ease: [0.6, -0.05, 0.01, 0.99]
+        ease: [0.6, -0.05, 0.01, 0.99] as const
       }
     },
     exit: {
