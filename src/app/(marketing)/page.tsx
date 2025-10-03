@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Header } from '@/components/layout/header'
+import { Header } from '@/components/layout/header/Header'
 import { Hero } from '@/components/features/sections/hero'
 import { Clients } from '@/components/features/sections/clients'
 import { Services } from '@/components/features/sections/services'

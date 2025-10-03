@@ -1,3 +1,5 @@
 export { useContactForm } from './useContactForm'
 export { useMobileMenu } from './useMobileMenu'
 export { useScrollAnimation } from './useScrollAnimation'
+export { useScrollState } from './useScrollState'
+export { useNavigation } from './useNavigation'
