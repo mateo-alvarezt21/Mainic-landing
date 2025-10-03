@@ -1,6 +1,79 @@
+import { memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui'
 import type { NavItem } from '@/types/navigation'
+
+interface MobileMenuItemProps {
+  label: string
+  onClick: () => void
+  index: number
+}
+
+const MobileMenuItem = memo(({ label, onClick, index }: MobileMenuItemProps) => {
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      x: -30,
+      scale: 0.95
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        delay: index * 0.08,
+        duration: 0.4,
+        ease: [0.6, -0.05, 0.01, 0.99]
+      }
+    },
+    exit: {
+      opacity: 0,
+      x: -20,
+      transition: {
+        duration: 0.2
+      }
+    }
+  }
+
+  return (
+    <motion.div
+      variants={itemVariants}
+      whileTap={{ scale: 0.97 }}
+    >
+      <button
+        onClick={onClick}
+        className="group relative block w-full text-left text-white font-medium py-3 px-4 rounded-lg overflow-hidden border border-transparent hover:border-primary-500/30 transition-colors duration-300"
+      >
+        <span className="relative z-10 transition-colors duration-300 group-hover:text-primary-500">
+          {label}
+        </span>
+
+        <motion.div
+          className="absolute inset-0 bg-dark-700/50"
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        />
+
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-primary-500/0 via-primary-500/10 to-primary-500/0"
+          initial={{ x: '-100%' }}
+          whileHover={{ x: '100%' }}
+          transition={{ duration: 0.6, ease: 'easeInOut' }}
+        />
+
+        <motion.div
+          className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600"
+          initial={{ width: '0%' }}
+          whileHover={{ width: '100%' }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+        />
+      </button>
+    </motion.div>
+  )
+})
+
+MobileMenuItem.displayName = 'MobileMenuItem'
 
 interface MobileMenuProps {
   isOpen: boolean
@@ -8,73 +81,138 @@ interface MobileMenuProps {
   onNavClick: (href: string) => void
 }
 
-const menuVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: -20,
-    transition: { duration: 0.2 }
-  },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.2 }
+export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProps) => {
+  const menuVariants = {
+    hidden: {
+      opacity: 0,
+      y: -20,
+      scale: 0.95
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.3,
+        ease: [0.6, -0.05, 0.01, 0.99],
+        staggerChildren: 0.08,
+        delayChildren: 0.1
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -10,
+      scale: 0.98,
+      transition: {
+        duration: 0.2,
+        ease: 'easeIn'
+      }
+    }
   }
-}
 
-const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: (index: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: index * 0.1 }
-  })
-}
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.2 }
+    },
+    exit: {
+      opacity: 0,
+      transition: { duration: 0.2 }
+    }
+  }
 
-export function MobileMenu({ isOpen, navItems, onNavClick }: MobileMenuProps) {
+  const ctaButtonVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.9
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        delay: navItems.length * 0.08 + 0.2,
+        duration: 0.4,
+        ease: [0.6, -0.05, 0.01, 0.99]
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: 10,
+      transition: { duration: 0.2 }
+    }
+  }
+
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
-        <motion.div
-          variants={menuVariants}
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-          className="lg:hidden bg-dark-900/98 backdrop-blur-xl border-t border-gray-700/50 shadow-2xl"
-        >
-          <div className="container mx-auto py-6 px-4 sm:px-6">
-            <div className="space-y-3">
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.href}
-                  custom={index}
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  onClick={() => onNavClick(item.href)}
-                  className="block w-full text-left text-white hover:text-primary-400 transition-all duration-200 font-medium py-3 px-4 rounded-lg hover:bg-dark-700/50 border border-transparent hover:border-primary-500/30"
+        <>
+          <motion.div
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="fixed inset-0 bg-dark-900/60 backdrop-blur-sm z-40 lg:hidden"
+            onClick={() => onNavClick('')}
+          />
+
+          <motion.div
+            variants={menuVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="fixed top-[73px] left-0 right-0 z-50 lg:hidden bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900 backdrop-blur-xl border-b border-primary-500/20 shadow-2xl shadow-primary-500/5"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-transparent pointer-events-none" />
+
+            <div className="relative container mx-auto py-6 px-4 sm:px-6">
+              <div className="space-y-2">
+                {navItems.map((item, index) => (
+                  <MobileMenuItem
+                    key={item.href}
+                    label={item.label}
+                    onClick={() => onNavClick(item.href)}
+                    index={index}
+                  />
+                ))}
+
+                <motion.div
+                  variants={ctaButtonVariants}
+                  className="pt-4"
+                  whileTap={{ scale: 0.97 }}
                 >
-                  {item.label}
-                </motion.button>
-              ))}
-              <motion.div
-                custom={navItems.length}
-                variants={itemVariants}
-                initial="hidden"
-                animate="visible"
-                className="pt-4"
-              >
-                <Button
-                  variant="primary"
-                  className="w-full"
-                  onClick={() => onNavClick('contact')}
-                >
-                  Consulta Gratuita
-                </Button>
-              </motion.div>
+                  <Button
+                    variant="primary"
+                    className="w-full relative overflow-hidden group shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-shadow duration-300"
+                    onClick={() => onNavClick('contact')}
+                  >
+                    <span className="relative z-10">Consulta Gratuita</span>
+
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.5, ease: 'easeInOut' }}
+                    />
+                  </Button>
+                </motion.div>
+              </div>
             </div>
-          </div>
-        </motion.div>
+
+            <motion.div
+              className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              exit={{ scaleX: 0 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+            />
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   )
-}
+})
+
+MobileMenu.displayName = 'MobileMenu'
