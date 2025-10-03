@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useScroll, useTransform, useMotionValue, animate } from 'framer-motion'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui'
 import { ArrowRight, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -20,7 +20,7 @@ export function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isClient, setIsClient] = useState(false)
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 })
-  
+
   // Motion values for smooth animations
   const scale1 = useMotionValue(1)
   const scale2 = useMotionValue(1.2)
@@ -30,27 +30,27 @@ export function Hero() {
     setIsClient(true)
     if (typeof window !== 'undefined') {
       setDimensions({ width: window.innerWidth, height: window.innerHeight })
-      
+
       const handleMouseMove = (e: MouseEvent) => {
         setMousePosition({ x: e.clientX, y: e.clientY })
       }
 
       // Start continuous animations for the mouse followers
       const animateScales = () => {
-        animate(scale1, [1, 1.1, 1], { 
-          duration: 3, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
+        animate(scale1, [1, 1.1, 1], {
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
         })
-        animate(scale2, [1.2, 1.35, 1.2], { 
-          duration: 4, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
+        animate(scale2, [1.2, 1.35, 1.2], {
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut"
         })
-        animate(scale3, [0.8, 1, 0.8], { 
-          duration: 2.5, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
+        animate(scale3, [0.8, 1, 0.8], {
+          duration: 2.5,
+          repeat: Infinity,
+          ease: "easeInOut"
         })
       }
 
@@ -77,7 +77,7 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Multi-layer parallax background */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0"
         style={{ y: yFast, scale, rotateX: rotate }}
       >
@@ -86,7 +86,7 @@ export function Hero() {
       </motion.div>
 
       {/* Ultra-fast parallax layer */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 opacity-30"
         style={{ y: yUltraFast }}
       >
@@ -95,7 +95,7 @@ export function Hero() {
       </motion.div>
 
       {/* Reverse parallax layer */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 opacity-40"
         style={{ y: yReverse, skew: `${skew}deg` }}
       >
@@ -159,7 +159,7 @@ export function Hero() {
       </motion.div>
 
       {/* Main content */}
-      <motion.div 
+      <motion.div
         className="relative z-10 container mx-auto px-4 sm:px-6"
         style={{ opacity }}
       >
@@ -192,7 +192,7 @@ export function Hero() {
           >
             Automatiza tu{' '}
             <span className="relative inline-block">
-              <span 
+              <span
                 className="gradient-text"
                 style={{
                   background: 'linear-gradient(135deg, rgba(17,147,212,0.9) 0%, rgba(139,92,246,0.8) 50%, rgba(6,214,160,0.7) 100%)',
@@ -215,7 +215,7 @@ export function Hero() {
             con Tecnología{' '}
             <motion.span
               className="inline-block"
-              animate={{ 
+              animate={{
                 backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
               }}
               transition={{ duration: 5, repeat: Infinity }}

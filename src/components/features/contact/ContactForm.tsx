@@ -2,9 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useContactForm } from '@/hooks/useContactForm'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Textarea } from '@/components/ui/Textarea'
+import { Button, Input, Textarea } from '@/components/ui'
 import { CheckCircle, Send } from 'lucide-react'
 
 export function ContactForm() {
@@ -36,7 +34,7 @@ export function ContactForm() {
       className="bg-dark-700 rounded-2xl p-8 space-y-6 border border-gray-600"
     >
       <h3 className="text-2xl font-bold mb-6">Envíanos un mensaje</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <Input

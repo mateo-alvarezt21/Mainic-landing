@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Play, Award, Zap } from 'lucide-react'
-import { SectionDiffuser } from '@/components/ui/SectionDiffuser'
+import { SectionDiffuser } from '@/components/ui'
 
 const cases = [
   {
@@ -75,13 +75,13 @@ export function Cases() {
   const handleManualCaseSelect = (index: number) => {
     setCurrentCase(index)
     setIsAutoPlaying(false)
-    
+
     // Resume auto-play after 10 seconds of inactivity
     setTimeout(() => {
       setIsAutoPlaying(true)
     }, 10000)
   }
-  
+
   const y = useTransform(scrollYProgress, [0, 1], [50, -50])
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3])
 
@@ -103,9 +103,9 @@ export function Cases() {
             opacity: 0.4
           }} />
         </div>
-        
+
         {/* Success particles */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0"
           style={{ y, opacity }}
         >
@@ -168,7 +168,7 @@ export function Cases() {
             </span>
           </h2>
           <p className="text-lg md:text-xl text-slate-400 max-w-4xl mx-auto leading-relaxed">
-            Más que números y métricas, estas son historias reales de empresas que confiaron en nosotros 
+            Más que números y métricas, estas son historias reales de empresas que confiaron en nosotros
             y transformaron completamente sus operaciones.
           </p>
         </motion.div>
@@ -180,11 +180,10 @@ export function Cases() {
               <button
                 key={caseStudy.id}
                 onClick={() => handleManualCaseSelect(index)}
-                className={`px-4 md:px-6 py-2 md:py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
-                  currentCase === index
+                className={`px-4 md:px-6 py-2 md:py-3 rounded-xl text-sm font-medium transition-all duration-300 ${currentCase === index
                     ? 'bg-gradient-to-r from-emerald-500 to-blue-500 text-white shadow-lg'
                     : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
-                }`}
+                  }`}
               >
                 {caseStudy.company}
               </button>
@@ -218,10 +217,10 @@ export function Cases() {
                   style={{ height: '280px', minHeight: '280px' }}
                 />
                 <div className={`absolute inset-0 bg-gradient-to-t ${cases[currentCase].color} opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
-                
+
                 {/* Overlay pattern */}
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20" />
-                
+
                 {/* Success badge */}
                 <div className="absolute top-4 left-4 bg-emerald-500/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-2">
                   <Award className="w-3 h-3 text-white" />
@@ -273,7 +272,7 @@ export function Cases() {
                   >
                     {/* Success indicator */}
                     <div className="absolute top-2 right-2 w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                    
+
                     <div className="text-center">
                       <div className="text-xl md:text-2xl font-bold text-emerald-400 mb-1 group-hover:scale-110 transition-transform duration-300">
                         {result.metric}
@@ -282,7 +281,7 @@ export function Cases() {
                         {result.description}
                       </div>
                     </div>
-                    
+
                     {/* Hover glow */}
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </motion.div>
@@ -318,7 +317,7 @@ export function Cases() {
                   <span>Ver Historia Completa</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
-                
+
                 <button className="group flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-600/50 hover:border-slate-500/80 text-slate-300 hover:text-white transition-all duration-300">
                   <span>Solicitar Demo</span>
                 </button>
@@ -334,11 +333,10 @@ export function Cases() {
               <button
                 key={index}
                 onClick={() => handleManualCaseSelect(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  currentCase === index 
-                    ? 'bg-emerald-400 scale-150 shadow-lg shadow-emerald-400/50' 
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${currentCase === index
+                    ? 'bg-emerald-400 scale-150 shadow-lg shadow-emerald-400/50'
                     : 'bg-slate-500 hover:bg-slate-400'
-                }`}
+                  }`}
               />
             ))}
             <div className="w-px h-4 bg-slate-600 mx-2" />
@@ -349,15 +347,15 @@ export function Cases() {
               <>
                 <div className="w-px h-4 bg-slate-600 mx-2" />
                 <div className="flex items-center gap-2">
-                  <motion.div 
+                  <motion.div
                     className="w-2 h-2 bg-emerald-400/60 rounded-full"
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.3, 1],
                       opacity: [0.6, 1, 0.6]
                     }}
-                    transition={{ 
-                      duration: 1.5, 
-                      repeat: Infinity 
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity
                     }}
                   />
                   <span className="text-xs text-emerald-400/80">Auto</span>
@@ -395,11 +393,11 @@ export function Cases() {
           </div>
         </motion.div>
       </div>
-      
+
       {/* Diffuser transition to next section */}
-      <SectionDiffuser 
-        fromColor="#0f172a" 
-        toColor="#020617" 
+      <SectionDiffuser
+        fromColor="#0f172a"
+        toColor="#020617"
         variant="wave"
         height="md"
       />

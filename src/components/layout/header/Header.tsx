@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui'
 import { scrollToSection } from '@/lib/utils'
 
 export function Header() {
@@ -33,9 +33,8 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-dark-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-dark-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+        }`}
     >
       <nav className="container mx-auto flex items-center justify-between py-4 px-4 sm:px-6">
         {/* Logo */}
@@ -57,8 +56,8 @@ export function Header() {
               {item.label}
             </button>
           ))}
-          <Button 
-            variant="primary" 
+          <Button
+            variant="primary"
             size="sm"
             onClick={() => handleNavClick('contact')}
           >
@@ -106,8 +105,8 @@ export function Header() {
                   transition={{ delay: navItems.length * 0.1 }}
                   className="pt-4"
                 >
-                  <Button 
-                    variant="primary" 
+                  <Button
+                    variant="primary"
                     className="w-full"
                     onClick={() => handleNavClick('contact')}
                   >

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ContactForm } from '@/components/forms/ContactForm'
+import { ContactForm } from '@/components/features/contact'
 import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 
 const contactInfo = [
@@ -31,7 +31,7 @@ const contactInfo = [
   }
 ]
 
-export function Contact() {
+export function ContactSection() {
     return (
       <section id="contact" className="py-12 md:py-20 bg-dark-800 relative overflow-hidden">
         {/* Background decoration */}

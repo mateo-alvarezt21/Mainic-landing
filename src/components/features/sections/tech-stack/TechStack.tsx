@@ -8,7 +8,7 @@ import {
   Brain,
   BarChart3
 } from 'lucide-react'
-import { SectionDiffuser } from '@/components/ui/SectionDiffuser'
+import { SectionDiffuser } from '@/components/ui'
 
 const benefits = [
   {

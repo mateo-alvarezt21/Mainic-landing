@@ -1,16 +1,16 @@
 import { Metadata } from 'next'
-import { Header } from '@/components/layout/Header'
-import { Hero } from '@/components/sections/Hero'
-import { Clients } from '@/components/sections/Clients'
-import { Services } from '@/components/sections/Services'
-import { TechStack } from '@/components/sections/TechStack'
-import { Cases } from '@/components/sections/Cases'
-import { Stats } from '@/components/sections/Stats'
-import { Testimonials } from '@/components/sections/Testimonials'
-import { Contact } from '@/components/sections/Contact'
-import { Footer } from '@/components/layout/Footer'
-import { ScrollProgress } from '@/components/ui/ScrollProgress'
-import { FloatingElements } from '@/components/ui/FloatingElements'
+import { Header } from '@/components/layout/header'
+import { Hero } from '@/components/features/sections/hero'
+import { Clients } from '@/components/features/sections/clients'
+import { Services } from '@/components/features/sections/services'
+import { TechStack } from '@/components/features/sections/tech-stack'
+import { Cases } from '@/components/features/sections/cases'
+import { Stats } from '@/components/features/sections/stats'
+import { Testimonials } from '@/components/features/sections/testimonials'
+import { ContactSection } from '@/components/features/sections/contact-section'
+import { Footer } from '@/components/layout/footer'
+import { ScrollProgress } from '@/components/ui/scroll-progress'
+import { FloatingElements } from '@/components/ui/floating-elements'
 
 export const metadata: Metadata = {
   title: 'Mainic Software Services - Automatiza tu Éxito con Tecnología Inteligente',
@@ -57,7 +57,7 @@ export default function HomePage() {
         <Services />
         <Stats />
         <Testimonials />
-        <Contact />
+        <ContactSection />
       </main>
       
       {/* Footer */}
