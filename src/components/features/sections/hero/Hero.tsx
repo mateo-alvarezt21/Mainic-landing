@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useMotionValue, animate } from 'framer
 import { Button } from '@/components/ui'
 import { ArrowRight, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { getPageInfo } from '@/lib/wp'
 
 export function Hero() {
   const { scrollY } = useScroll()
@@ -28,6 +29,19 @@ export function Hero() {
 
   useEffect(() => {
     setIsClient(true)
+    
+    // Buscar datos de WordPress
+    const fetchPortadaData = async () => {
+      try {
+        const portadaData = await getPageInfo('portada')
+        console.log('Datos de la portada desde WordPress:', portadaData)
+      } catch (error) {
+        console.error('Error al obtener datos de portada:', error)
+      }
+    }
+    
+    fetchPortadaData()
+    
     if (typeof window !== 'undefined') {
       setDimensions({ width: window.innerWidth, height: window.innerHeight })
 
@@ -159,8 +173,8 @@ export function Hero() {
       </motion.div>
 
       {/* Main content */}
-      <motion.div
-        className="relative z-10 container mx-auto px-4 sm:px-6"
+      <motion.div 
+        className="relative z-10 w-full px-4 sm:px-6"
         style={{ opacity }}
       >
         <div className="max-w-5xl mx-auto text-center pt-16 sm:pt-8 md:pt-0">

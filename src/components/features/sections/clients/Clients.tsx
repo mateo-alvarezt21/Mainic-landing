@@ -2,6 +2,9 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { getPostsByCategory, decodeHtmlEntities } from '@/lib/wp'
+import type { WPPost } from '@/lib/wp'
 
 const clients = [
   // {
@@ -39,6 +42,22 @@ const clients = [
 ]
 
 export function Clients() {
+  const [clientsData, setClientsData] = useState<WPPost[]>([])
+
+  useEffect(() => {
+    const fetchClientsData = async () => {
+      try {
+        const data = await getPostsByCategory('clientes', 20)
+        console.log('Posts de clientes desde WordPress:', data)
+        setClientsData(data)
+      } catch (error) {
+        console.error('Error al obtener posts de clientes:', error)
+      }
+    }
+    
+    fetchClientsData()
+  }, [])
+
   return (
     <section className="py-12 md:py-20 bg-dark-800 relative overflow-hidden">
       {/* Background decoration */}
@@ -47,7 +66,8 @@ export function Clients() {
         <div className="absolute bottom-1/4 right-1/3 w-48 h-48 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full blur-2xl" />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+      <div className="w-full px-4 sm:px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -64,9 +84,76 @@ export function Clients() {
           </p>
         </motion.div>
 
-        {/* Responsive logos grid */}
+        {/* WordPress clients grid */}
+        {clientsData.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <div className={`mx-auto px-4 ${
+              clientsData.length === 1 
+                ? 'max-w-xs' 
+                : clientsData.length === 2 
+                  ? 'max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl' 
+                  : clientsData.length <= 4
+                    ? 'max-w-3xl lg:max-w-4xl'
+                    : 'max-w-5xl lg:max-w-6xl'
+            }`}>
+              <div className={`flex flex-wrap justify-center items-center ${
+                clientsData.length === 1 
+                  ? 'gap-0' 
+                  : clientsData.length === 2 
+                    ? 'gap-4 sm:gap-6 md:gap-8 lg:gap-12' 
+                    : clientsData.length <= 4
+                      ? 'gap-4 sm:gap-6 md:gap-8 lg:gap-12'
+                      : 'gap-3 sm:gap-4 md:gap-6 lg:gap-8'
+              }`}>
+                {clientsData.map((client, index) => (
+                  <motion.div
+                    key={client.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    whileHover={{ 
+                      scale: 1.1,
+                      y: -5,
+                      transition: { duration: 0.2 }
+                    }}
+                    transition={{ 
+                      duration: 0.5, 
+                      delay: index * 0.1 
+                    }}
+                    viewport={{ once: true }}
+                    className="w-40 h-28 sm:w-48 sm:h-32 md:w-56 md:h-36 lg:w-64 lg:h-40 bg-dark-700/50 border border-gray-600/30 rounded-lg md:rounded-xl flex items-center justify-center hover:bg-dark-600/50 hover:border-primary-500/50 transition-all cursor-pointer backdrop-blur-sm group relative"
+                    title={decodeHtmlEntities(client.title.rendered)}
+                  >
+                    {client._embedded?.['wp:featuredmedia']?.[0]?.source_url ? (
+                      <Image
+                        src={client._embedded['wp:featuredmedia'][0].source_url}
+                        alt={decodeHtmlEntities(client.title.rendered)}
+                        fill
+                        className="object-contain p-2 filter brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                        }}
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center h-full text-gray-500 text-xs">
+                        {decodeHtmlEntities(client.title.rendered)}
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Fallback static logos */}
         <div className="relative">
-          {clients.length > 0 ? (
+          {clientsData.length === 0 && clients.length > 0 ? (
             <div className={`mx-auto px-4 ${
               clients.length === 1 
                 ? 'max-w-xs' 
@@ -119,25 +206,7 @@ export function Clients() {
               ))}
               </motion.div>
             </div>
-          ) : (
-            // Placeholder cuando no hay clientes
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center py-12"
-            >
-              <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-primary-500 to-purple-600 rounded-full mb-6">
-                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <p className="text-gray-400">
-                Próximamente mostraremos aquí los logos de nuestros clientes de confianza
-              </p>
-            </motion.div>
-          )}
+          ) : null}
         </div>
 
         {/* Stats below logos */}
@@ -150,7 +219,10 @@ export function Clients() {
         >
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-2xl mx-auto">
             {[
-              { number: clients.length.toString(), label: clients.length === 1 ? 'Cliente de Confianza' : 'Clientes de Confianza' },
+              { 
+                number: clientsData.length > 0 ? clientsData.length.toString() : clients.length.toString(), 
+                label: (clientsData.length > 0 ? clientsData.length : clients.length) === 1 ? 'Cliente de Confianza' : 'Clientes de Confianza' 
+              },
               { number: '24/7', label: 'Soporte Dedicado' },
               { number: '100%', label: 'Compromiso' }
             ].map((stat, index) => (
@@ -170,6 +242,7 @@ export function Clients() {
             ))}
           </div>
         </motion.div>
+        </div>
       </div>
     </section>
   )

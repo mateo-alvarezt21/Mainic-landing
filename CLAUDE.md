@@ -9,6 +9,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm start` - Start production server (requires build first)
 - `npm run lint` - Run ESLint for code quality checks
 
+## Health Check Endpoints
+
+- `/api/health` - Basic health check with system info
+- `/api/ready` - Readiness probe for deployment orchestrators
+- `/api/metrics` - Detailed system metrics and performance data
+
 ## Architecture Overview
 
 This is a **Next.js 15** landing page for Mainic Software Services, built with the App Router architecture. The application is optimized for performance and SEO, targeting Spanish-speaking markets (primarily Colombia).

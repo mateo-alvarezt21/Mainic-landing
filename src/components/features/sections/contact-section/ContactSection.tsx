@@ -40,7 +40,8 @@ export function ContactSection() {
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-purple-500 rounded-full blur-3xl" />
         </div>
   
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="w-full px-4 sm:px-6 relative z-10">
+          <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -130,6 +131,7 @@ export function ContactSection() {
                 </button>
               </motion.div>
             </motion.div>
+          </div>
           </div>
         </div>
       </section>

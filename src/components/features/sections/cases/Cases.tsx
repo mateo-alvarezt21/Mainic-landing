@@ -148,7 +148,8 @@ export function Cases() {
         </motion.div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <div className="w-full px-4 md:px-6 relative z-10">
+        <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -392,6 +393,7 @@ export function Cases() {
             </div>
           </div>
         </motion.div>
+        </div>
       </div>
 
       {/* Diffuser transition to next section */}

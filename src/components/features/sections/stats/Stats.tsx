@@ -57,7 +57,8 @@ export function Stats() {
         <div className="absolute top-1/2 left-10 w-2 h-2 bg-blue-400/50 rounded-full animate-ping delay-500" />
       </motion.div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full px-4 relative z-10">
+        <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -92,6 +93,7 @@ export function Stats() {
               </div>
             </motion.div>
           ))}
+        </div>
         </div>
       </div>
     </section>

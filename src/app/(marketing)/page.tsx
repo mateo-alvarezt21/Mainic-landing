@@ -6,6 +6,7 @@ import { Services } from '@/components/features/sections/services'
 import { TechStack } from '@/components/features/sections/tech-stack'
 import { Cases } from '@/components/features/sections/cases'
 import { Stats } from '@/components/features/sections/stats'
+import About from '@/components/sections/About'
 import { Testimonials } from '@/components/features/sections/testimonials'
 import { ContactSection } from '@/components/features/sections/contact-section'
 import { Footer } from '@/components/layout/footer'
@@ -49,9 +50,10 @@ export default function HomePage() {
       <Header />
       
       {/* Main content */}
-      <main className="overflow-hidden px-4 sm:px-6">
+      <main className="overflow-hidden">
         <Hero />
         <Clients />
+        <About />
         <Cases />
         <TechStack />
         <Services />

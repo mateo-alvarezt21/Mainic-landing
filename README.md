@@ -193,6 +193,16 @@ export async function getStrapiData(endpoint: string) {
 }
 ```
 
+## 🩺 Health Checks
+
+La aplicación incluye endpoints de monitoreo para deployment y debugging:
+
+- **`/api/health`** - Health check básico con información del sistema
+- **`/api/ready`** - Readiness probe para orquestadores (Coolify, Kubernetes)
+- **`/api/metrics`** - Métricas detalladas del sistema y rendimiento
+
+Perfectos para configuración en Coolify, Docker Compose o cualquier plataforma de deployment.
+
 ## 📊 SEO y Performance
 
 - ✅ **Core Web Vitals** optimizados
