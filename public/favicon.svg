@@ -1,4 +1,13 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="6" fill="#1193d4"/>
-  <text x="16" y="22" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold">M</text>
+  <defs>
+    <linearGradient id="multicolorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#06d6a0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1193d4;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#multicolorGradient)"/>
+  <text x="16" y="22" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold" style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">M</text>
 </svg>

@@ -1,8 +1,8 @@
 'use client'
 
 import { motion, useScroll, useTransform, useMotionValue, animate } from 'framer-motion'
-import { Button } from '@/components/ui'
-import { ArrowRight, Play, Sparkles } from 'lucide-react'
+// import { Button } from '@/components/ui'
+import { ArrowRight, /* Play, */ Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 // import { getPageInfo } from '@/lib/wp' // Comentado - WordPress no disponible
@@ -96,12 +96,12 @@ export function Hero() {
     }
   }, [scale1, scale2, scale3])
 
-  const scrollToServices = () => {
-    const servicesSection = document.getElementById('services')
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  // const scrollToServices = () => {
+  //   const servicesSection = document.getElementById('services')
+  //   if (servicesSection) {
+  //     servicesSection.scrollIntoView({ behavior: 'smooth' })
+  //   }
+  // }
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact')

@@ -1,37 +1,37 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 import Image from 'next/image'
 
 interface LogoProps {
   className?: string
 }
 
-interface CompanyData {
-  id: number
-  logo: {
-    url: string
-  }
-}
+// interface CompanyData {
+//   id: number
+//   logo: {
+//     url: string
+//   }
+// }
 
-const fetchCompanyLogo = async (): Promise<string | null> => {
-  try {
-    console.log('Fetching company logo...')
-    const response = await fetch('https://strapi-core.mainics.com/empresa-data')
-    const data: CompanyData[] = await response.json()
-    console.log('Company data received:', data)
-    if (data.length > 0 && data[0].logo?.url) {
-      const logoUrl = `https://strapi-core.mainics.com${data[0].logo.url}`
-      console.log('Logo URL:', logoUrl)
-      return logoUrl
-    }
-    console.log('No logo found in data')
-    return null
-  } catch (error) {
-    console.error('Error fetching company logo:', error)
-    return null
-  }
-}
+// const fetchCompanyLogo = async (): Promise<string | null> => {
+//   try {
+//     console.log('Fetching company logo...')
+//     const response = await fetch('https://strapi-core.mainics.com/empresa-data')
+//     const data: CompanyData[] = await response.json()
+//     console.log('Company data received:', data)
+//     if (data.length > 0 && data[0].logo?.url) {
+//       const logoUrl = `https://strapi-core.mainics.com${data[0].logo.url}`
+//       console.log('Logo URL:', logoUrl)
+//       return logoUrl
+//     }
+//     console.log('No logo found in data')
+//     return null
+//   } catch (error) {
+//     console.error('Error fetching company logo:', error)
+//     return null
+//   }
+// }
 
 const FloatingParticle = memo(({ index }: { index: number }) => {
   const particleVariants = {
@@ -109,62 +109,62 @@ export const Logo = memo(({ className = '' }: LogoProps) => {
     },
   }
 
-  const glowVariants = {
-    rest: {
-      opacity: 0.5,
-      scale: 1,
-    },
-    hover: {
-      opacity: [0.5, 1, 0.5],
-      scale: [1, 1.2, 1],
-      transition: {
-        duration: 1.5,
-        repeat: Infinity,
-        ease: 'easeInOut' as const,
-      },
-    },
-  }
+  // const glowVariants = {
+  //   rest: {
+  //     opacity: 0.5,
+  //     scale: 1,
+  //   },
+  //   hover: {
+  //     opacity: [0.5, 1, 0.5],
+  //     scale: [1, 1.2, 1],
+  //     transition: {
+  //       duration: 1.5,
+  //       repeat: Infinity,
+  //       ease: 'easeInOut' as const,
+  //     },
+  //   },
+  // }
 
-  const letterVariants = {
-    rest: {
-      y: 0,
-      rotateY: 0,
-    },
-    hover: {
-      y: [0, -3, 0],
-      rotateY: [0, 180, 360],
-      transition: {
-        duration: 0.6,
-        ease: 'easeInOut' as const,
-      },
-    },
-  }
+  // const letterVariants = {
+  //   rest: {
+  //     y: 0,
+  //     rotateY: 0,
+  //   },
+  //   hover: {
+  //     y: [0, -3, 0],
+  //     rotateY: [0, 180, 360],
+  //     transition: {
+  //       duration: 0.6,
+  //       ease: 'easeInOut' as const,
+  //     },
+  //   },
+  // }
 
-  const textVariants = {
-    rest: {
-      x: 0,
-    },
-    hover: {
-      x: [0, 2, 0],
-      transition: {
-        duration: 0.5,
-        ease: 'easeInOut' as const,
-      },
-    },
-  }
+  // const textVariants = {
+  //   rest: {
+  //     x: 0,
+  //   },
+  //   hover: {
+  //     x: [0, 2, 0],
+  //     transition: {
+  //       duration: 0.5,
+  //       ease: 'easeInOut' as const,
+  //     },
+  //   },
+  // }
 
-  const shimmerVariants = {
-    rest: {
-      x: '-100%',
-    },
-    hover: {
-      x: '100%',
-      transition: {
-        duration: 0.8,
-        ease: 'easeInOut' as const,
-      },
-    },
-  }
+  // const shimmerVariants = {
+  //   rest: {
+  //     x: '-100%',
+  //   },
+  //   hover: {
+  //     x: '100%',
+  //     transition: {
+  //       duration: 0.8,
+  //       ease: 'easeInOut' as const,
+  //     },
+  //   },
+  // }
 
   return (
     <motion.div
