@@ -1,11 +1,9 @@
 import { Metadata } from 'next'
 import { Header } from '@/components/layout/header/Header'
 import { Hero } from '@/components/features/sections/hero'
-import { Clients } from '@/components/features/sections/clients'
 import { Services } from '@/components/features/sections/services'
 import { TechStack } from '@/components/features/sections/tech-stack'
 import { Cases } from '@/components/features/sections/cases'
-import { Stats } from '@/components/features/sections/stats'
 import About from '@/components/sections/About'
 import { Testimonials } from '@/components/features/sections/testimonials'
 import { ContactSection } from '@/components/features/sections/contact-section'
@@ -52,12 +50,10 @@ export default function HomePage() {
       {/* Main content */}
       <main className="overflow-hidden">
         <Hero />
-        <Clients />
-        <About />
-        <Cases />
-        <TechStack />
         <Services />
-        <Stats />
+        <TechStack />
+        <Cases />
+        <About />
         <Testimonials />
         <ContactSection />
       </main>

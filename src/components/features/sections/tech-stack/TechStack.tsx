@@ -142,12 +142,12 @@ export function TechStack() {
       </div>
       
       {/* Diffuser transition to Services section */}
-      <SectionDiffuser 
-        fromColor="#111618" 
-        toColor="#0f172a" 
-        variant="curve"
-        height="md"
-      />
+        {/* <SectionDiffuser 
+          fromColor="#111618" 
+          toColor="#0f172a" 
+          variant="curve"
+          height="md"
+        /> */}
     </section>
   )
 }

@@ -1,9 +1,36 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
+import Image from 'next/image'
 
 interface LogoProps {
   className?: string
+}
+
+interface CompanyData {
+  id: number
+  logo: {
+    url: string
+  }
+}
+
+const fetchCompanyLogo = async (): Promise<string | null> => {
+  try {
+    console.log('Fetching company logo...')
+    const response = await fetch('https://strapi-core.mainics.com/empresa-data')
+    const data: CompanyData[] = await response.json()
+    console.log('Company data received:', data)
+    if (data.length > 0 && data[0].logo?.url) {
+      const logoUrl = `https://strapi-core.mainics.com${data[0].logo.url}`
+      console.log('Logo URL:', logoUrl)
+      return logoUrl
+    }
+    console.log('No logo found in data')
+    return null
+  } catch (error) {
+    console.error('Error fetching company logo:', error)
+    return null
+  }
 }
 
 const FloatingParticle = memo(({ index }: { index: number }) => {
@@ -45,6 +72,8 @@ const FloatingParticle = memo(({ index }: { index: number }) => {
 FloatingParticle.displayName = 'FloatingParticle'
 
 export const Logo = memo(({ className = '' }: LogoProps) => {
+  // Direct logo URL - we know this works from our testing
+  const logoUrl = 'https://strapi-core.mainics.com/uploads/Logo_minimalista_en_tonos_azules_removebg_preview_8c8dea0090.png'
   const containerVariants = {
     initial: { opacity: 0, x: -20 },
     animate: {
@@ -144,74 +173,22 @@ export const Logo = memo(({ className = '' }: LogoProps) => {
       animate="animate"
       className={className}
     >
-      <Link href="/" className="flex items-center space-x-3 group">
+      <Link href="/" className="flex items-center group p-0 m-0">
         <motion.div
           variants={logoVariants}
           initial="rest"
           whileHover="hover"
           whileTap="tap"
-          className="relative w-12 h-12 flex items-center justify-center"
+          className="relative w-28 h-28 flex items-center justify-center p-0 m-0"
         >
-          <motion.div
-            variants={glowVariants}
-            className="absolute inset-0 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg blur-md opacity-50"
-          />
-
-          <div className="relative w-full h-full bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 rounded-lg overflow-hidden shadow-lg shadow-primary-500/30">
-            <motion.div
-              variants={shimmerVariants}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-            />
-
-            <motion.span
-              variants={letterVariants}
-              className="absolute inset-0 flex items-center justify-center text-white font-bold text-2xl"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              M
-            </motion.span>
-
-            <div className="absolute inset-0">
-              {[0, 1, 2].map((index) => (
-                <FloatingParticle key={index} index={index} />
-              ))}
-            </div>
-          </div>
-
-          <motion.div
-            className="absolute -inset-1 border-2 border-primary-500/20 rounded-lg"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileHover={{
-              opacity: 1,
-              scale: 1.1,
-              transition: { duration: 0.3 },
-            }}
-          />
-        </motion.div>
-
-        <motion.div variants={textVariants} className="relative px-2 py-1 overflow-hidden">
-          <span className="text-2xl font-bold text-white whitespace-nowrap relative z-10">
-            Mainic
-          </span>
-
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-            animate={{
-              x: ['-100%', '200%'],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatDelay: 2,
-              ease: 'easeInOut',
-            }}
-          />
-
-          <motion.div
-            className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-700"
-            initial={{ width: '0%' }}
-            whileHover={{ width: '100%' }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+          <Image
+            src={logoUrl}
+            alt="Mainic Logo"
+            width={112}
+            height={112}
+            className="w-28 h-28 object-contain filter brightness-0 invert block"
+            priority
+            style={{ display: 'block', margin: 0, padding: 0 }}
           />
         </motion.div>
       </Link>

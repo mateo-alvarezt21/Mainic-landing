@@ -4,7 +4,27 @@ import { motion, useScroll, useTransform, useMotionValue, animate } from 'framer
 import { Button } from '@/components/ui'
 import { ArrowRight, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { getPageInfo } from '@/lib/wp'
+import Image from 'next/image'
+// import { getPageInfo } from '@/lib/wp' // Comentado - WordPress no disponible
+
+interface CompanyFromEndpoint {
+  name: string
+  logo: string
+}
+
+const fetchCompaniesFromEndpoint = async (): Promise<CompanyFromEndpoint[]> => {
+  try {
+    return [
+      {
+        name: 'Empresa de Confianza',
+        logo: 'https://strapi-core.mainics.com/uploads/BLANCO_d64b3634d7.png'
+      }
+    ]
+  } catch (error) {
+    console.error('Error al crear datos de empresas:', error)
+    return []
+  }
+}
 
 export function Hero() {
   const { scrollY } = useScroll()
@@ -21,6 +41,7 @@ export function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isClient, setIsClient] = useState(false)
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 })
+  const [endpointCompanies, setEndpointCompanies] = useState<CompanyFromEndpoint[]>([])
 
   // Motion values for smooth animations
   const scale1 = useMotionValue(1)
@@ -30,17 +51,18 @@ export function Hero() {
   useEffect(() => {
     setIsClient(true)
     
-    // Buscar datos de WordPress
-    const fetchPortadaData = async () => {
+    // Cargar empresas
+    const loadCompanies = async () => {
       try {
-        const portadaData = await getPageInfo('portada')
-        console.log('Datos de la portada desde WordPress:', portadaData)
+        const companies = await fetchCompaniesFromEndpoint()
+        console.log('Companies loaded in Hero:', companies)
+        setEndpointCompanies(companies)
       } catch (error) {
-        console.error('Error al obtener datos de portada:', error)
+        console.error('Error loading companies:', error)
       }
     }
     
-    fetchPortadaData()
+    loadCompanies()
     
     if (typeof window !== 'undefined') {
       setDimensions({ width: window.innerWidth, height: window.innerHeight })
@@ -177,168 +199,249 @@ export function Hero() {
         className="relative z-10 w-full px-4 sm:px-6"
         style={{ opacity }}
       >
-        <div className="max-w-5xl mx-auto text-center pt-16 sm:pt-8 md:pt-0">
+        <div className="max-w-7xl mx-auto pt-16 sm:pt-8 md:pt-0">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-primary-500/20 border border-primary-500/30 rounded-full text-primary-300 text-xs sm:text-sm font-medium mb-6 sm:mb-8"
+            className="flex justify-center mb-6 sm:mb-8"
           >
-            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-            <span className="whitespace-nowrap">Transformación Digital de Vanguardia</span>
+            <div className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-primary-500/20 border border-primary-500/30 rounded-full text-primary-300 text-xs sm:text-sm font-medium">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+              <span className="whitespace-nowrap">Transformación Digital de Vanguardia</span>
+            </div>
           </motion.div>
 
-          {/* Main heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.3) 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              filter: 'drop-shadow(0 8px 32px rgba(255,255,255,0.1))',
-              textShadow: '0 0 40px rgba(255,255,255,0.3)'
-            }}
-          >
-            Automatiza tu{' '}
-            <span className="relative inline-block">
-              <span
-                className="gradient-text"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(17,147,212,0.9) 0%, rgba(139,92,246,0.8) 50%, rgba(6,214,160,0.7) 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  filter: 'drop-shadow(0 8px 32px rgba(17,147,212,0.3))'
-                }}
-              >
-                Éxito
-              </span>
-              <motion.div
-                className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-purple-500"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 1, delay: 1 }}
-              />
-            </span>
-            <br />
-            con Tecnología{' '}
-            <motion.span
-              className="inline-block"
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-              }}
-              transition={{ duration: 5, repeat: Infinity }}
+          {/* Main content centered */}
+          <div className="text-center max-w-5xl mx-auto">
+            {/* Main heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight"
               style={{
-                background: 'linear-gradient(-45deg, #1193d4, #8b5cf6, #06d6a0, #ffd60a)',
-                backgroundSize: '400% 400%',
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.3) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                filter: 'drop-shadow(0 4px 16px rgba(139,92,246,0.4))'
+                filter: 'drop-shadow(0 8px 32px rgba(255,255,255,0.1))',
+                textShadow: '0 0 40px rgba(255,255,255,0.3)'
               }}
             >
-              Inteligente
-            </motion.span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed"
-          >
-            Transformamos empresas con{' '}
-            <span className="text-primary-400 font-semibold">soluciones de software personalizadas</span>,
-            automatización de procesos y análisis de datos avanzados que impulsan el crecimiento exponencial.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
-          >
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={scrollToContact}
-              className="group relative overflow-hidden"
-            >
-              <span className="relative z-10 flex items-center">
-                Solicitar Consulta Gratuita
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              Automatiza tu{' '}
+              <span className="relative inline-block">
+                <span
+                  className="gradient-text"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(17,147,212,0.9) 0%, rgba(139,92,246,0.8) 50%, rgba(6,214,160,0.7) 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    filter: 'drop-shadow(0 8px 32px rgba(17,147,212,0.3))'
+                  }}
+                >
+                  Éxito
+                </span>
+                <motion.div
+                  className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-purple-500"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 1, delay: 1 }}
+                />
               </span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-primary-600 to-purple-600"
-                initial={{ x: '-100%' }}
-                whileHover={{ x: '0%' }}
-                transition={{ duration: 0.3 }}
-              />
-            </Button>
+              <br />
+              con Tecnología{' '}
+              <motion.span
+                className="inline-block"
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{ duration: 5, repeat: Infinity }}
+                style={{
+                  background: 'linear-gradient(-45deg, #1193d4, #8b5cf6, #06d6a0, #ffd60a)',
+                  backgroundSize: '400% 400%',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 4px 16px rgba(139,92,246,0.4))'
+                }}
+              >
+                Inteligente
+              </motion.span>
+            </motion.h1>
 
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={scrollToServices}
-              className="group backdrop-blur-sm border-white/20 hover:border-primary-400"
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg md:text-xl text-gray-300 mb-10 max-w-4xl mx-auto leading-relaxed"
             >
-              <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
-              Ver Demo en Vivo
-            </Button>
-          </motion.div>
+              Transformamos empresas con{' '}
+              <span className="text-primary-400 font-semibold">soluciones de software personalizadas</span>,
+              automatización de procesos y análisis de datos avanzados que impulsan el crecimiento exponencial.
+            </motion.p>
 
-          {/* Stats preview */}
+            {/* Single CTA Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex justify-center"
+            >
+              <motion.button
+                onClick={scrollToContact}
+                className="group relative overflow-hidden px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-500 text-white font-bold text-lg shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                animate={{
+                  boxShadow: [
+                    "0 20px 40px rgba(16, 185, 129, 0.3)",
+                    "0 25px 50px rgba(59, 130, 246, 0.4)",
+                    "0 20px 40px rgba(168, 85, 247, 0.3)",
+                    "0 20px 40px rgba(16, 185, 129, 0.3)"
+                  ]
+                }}
+                transition={{
+                  boxShadow: {
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }
+                }}
+              >
+                {/* Animated background gradient */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  animate={{
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  style={{
+                    backgroundSize: '200% 200%'
+                  }}
+                />
+                
+                {/* Sparkle effect */}
+                <motion.div
+                  className="absolute inset-0"
+                  animate={{
+                    background: [
+                      'radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%)',
+                      'radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%)',
+                      'radial-gradient(circle at 40% 40%, rgba(255,255,255,0.1) 0%, transparent 50%)',
+                      'radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%)'
+                    ]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Pulse ring */}
+                <motion.div
+                  className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-purple-500 rounded-2xl opacity-20 group-hover:opacity-40"
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <span className="relative z-10 flex items-center gap-3">
+                  <motion.span
+                    animate={{
+                      textShadow: [
+                        "0 0 10px rgba(255,255,255,0.5)",
+                        "0 0 20px rgba(255,255,255,0.8)",
+                        "0 0 10px rgba(255,255,255,0.5)"
+                      ]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    🚀 Solicitar Consulta Gratuita
+                  </motion.span>
+                  <motion.div
+                    animate={{
+                      x: [0, 5, 0]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                  </motion.div>
+                </span>
+              </motion.button>
+            </motion.div>
+          </div>
+
+          {/* Companies that trust us */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="grid grid-cols-3 gap-8 max-w-2xl mx-auto"
+            className="mt-16 max-w-4xl mx-auto"
           >
-            {[
-              { number: '150+', label: 'Proyectos' },
-              { number: '98%', label: 'Satisfacción' },
-              { number: '50+', label: 'Empresas' }
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold gradient-text mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-400 text-sm">{stat.label}</div>
-              </div>
-            ))}
+            <div className="text-center mb-8">
+              <p className="text-gray-400 text-base mb-6">Empresas que confían en nosotros</p>
+            </div>
+            <div className="flex justify-center items-center">
+              {endpointCompanies.length > 0 ? (
+                endpointCompanies.map((company, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      transition: { duration: 0.2 }
+                    }}
+                    transition={{ 
+                      duration: 0.5, 
+                      delay: 0.9 + index * 0.1 
+                    }}
+                    className="relative"
+                    title={company.name}
+                  >
+                    <Image
+                      src={company.logo}
+                      alt={company.name}
+                      width={350}
+                      height={200}
+                      className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </motion.div>
+                ))
+              ) : (
+                <div className="text-gray-500 text-sm">Cargando empresas...</div>
+              )}
+            </div>
           </motion.div>
         </div>
       </motion.div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center text-gray-400"
-        >
-          <span className="text-sm mb-2">Desliza hacia abajo</span>
-          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1 h-3 bg-gray-400 rounded-full mt-2"
-            />
-          </div>
-        </motion.div>
-      </motion.div>
     </section>
   )
 }

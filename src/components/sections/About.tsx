@@ -2,8 +2,26 @@
 
 import { motion } from 'framer-motion'
 import { Users, Target, Lightbulb, Award } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
-const stats = [
+interface CompanyData {
+  id: number
+  years_experience: string
+  projects_completed: string
+}
+
+const fetchCompanyData = async (): Promise<CompanyData | null> => {
+  try {
+    const response = await fetch('https://strapi-core.mainics.com/empresa-data')
+    const data: CompanyData[] = await response.json()
+    return data.length > 0 ? data[0] : null
+  } catch (error) {
+    console.error('Error fetching company data:', error)
+    return null
+  }
+}
+
+const defaultStats = [
   {
     number: "5+",
     label: "Años de experiencia",
@@ -46,6 +64,36 @@ const values = [
 ]
 
 export default function About() {
+  const [companyData, setCompanyData] = useState<CompanyData | null>(null)
+
+  useEffect(() => {
+    const loadCompanyData = async () => {
+      const data = await fetchCompanyData()
+      setCompanyData(data)
+    }
+    loadCompanyData()
+  }, [])
+
+  // Create dynamic stats based on company data
+  const stats = companyData ? [
+    {
+      number: `${companyData.years_experience.trim()}+`,
+      label: "Años de experiencia",
+    },
+    {
+      number: `${companyData.projects_completed}+`,
+      label: "Proyectos completados",
+    },
+    {
+      number: "100%",
+      label: "Clientes satisfechos",
+    },
+    {
+      number: "24/7",
+      label: "Soporte técnico",
+    },
+  ] : defaultStats
+
   return (
     <section className="py-20 bg-gray-50 dark:bg-gray-900" id="about">
       <div className="w-full">

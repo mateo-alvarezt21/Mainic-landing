@@ -6,6 +6,77 @@ import Image from 'next/image'
 import { ArrowRight, Play, Award, Zap } from 'lucide-react'
 import { SectionDiffuser } from '@/components/ui'
 
+interface StrapiImageFormat {
+  ext: string
+  url: string
+  hash: string
+  mime: string
+  name: string
+  path: string | null
+  size: number
+  width: number
+  height: number
+}
+
+interface StrapiImage {
+  id: number
+  name: string
+  alternativeText: string
+  caption: string
+  width: number
+  height: number
+  formats: {
+    large?: StrapiImageFormat
+    small?: StrapiImageFormat
+    medium?: StrapiImageFormat
+    thumbnail?: StrapiImageFormat
+  }
+  hash: string
+  ext: string
+  mime: string
+  size: number
+  url: string
+  previewUrl: string | null
+  provider: string
+  provider_metadata: any
+  created_at: string
+  updated_at: string
+}
+
+interface TransformationStory {
+  id: number
+  titulo: string
+  published_at: string
+  created_at: string
+  updated_at: string
+  empresa: string | null
+  descripcion: string
+  mejoras: {
+    mejoras: Array<{
+      porcentaje: number
+      descripcion: string
+    }>
+  }
+  tecnologias: {
+    tecnologias: string[]
+  }
+  image: StrapiImage
+}
+
+const fetchTransformationStories = async (): Promise<TransformationStory[]> => {
+  try {
+    const response = await fetch('https://strapi-core.mainics.com/historias-cambios')
+    if (!response.ok) {
+      throw new Error(`Error fetching transformation stories: ${response.status}`)
+    }
+    const data = await response.json()
+    return data || []
+  } catch (error) {
+    console.error('Error fetching transformation stories:', error)
+    return []
+  }
+}
+
 const cases = [
   {
     id: 'techcorp',
@@ -55,21 +126,44 @@ export function Cases() {
   const ref = useRef(null)
   const [currentCase, setCurrentCase] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [strapiStories, setStrapiStories] = useState<TransformationStory[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   })
+
+  // Use Strapi data if available, fallback to hardcoded cases
+  const activeCases = strapiStories.length > 0 ? strapiStories : cases
+
+  // Fetch transformation stories from Strapi
+  useEffect(() => {
+    const loadStories = async () => {
+      try {
+        setIsLoading(true)
+        const stories = await fetchTransformationStories()
+        console.log('Transformation stories from Strapi:', stories)
+        setStrapiStories(stories)
+      } catch (error) {
+        console.error('Error loading transformation stories:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadStories()
+  }, [])
 
   // Auto-advance cases every 6 seconds
   useEffect(() => {
     if (!isAutoPlaying) return
 
     const interval = setInterval(() => {
-      setCurrentCase((prev) => (prev + 1) % cases.length)
+      setCurrentCase((prev) => (prev + 1) % activeCases.length)
     }, 6000)
 
     return () => clearInterval(interval)
-  }, [isAutoPlaying])
+  }, [isAutoPlaying, activeCases.length])
 
   // Pause auto-play when user manually selects a case
   const handleManualCaseSelect = (index: number) => {
@@ -177,16 +271,19 @@ export function Cases() {
         {/* Timeline Navigation */}
         <div className="flex justify-center mb-8 md:mb-10">
           <div className="flex flex-wrap justify-center gap-2 bg-slate-800/40 backdrop-blur-xl rounded-2xl p-2 border border-slate-600/30">
-            {cases.map((caseStudy, index) => (
+            {activeCases.map((caseStudy, index) => (
               <button
-                key={caseStudy.id}
+                key={strapiStories.length > 0 ? caseStudy.id : (caseStudy as any).id}
                 onClick={() => handleManualCaseSelect(index)}
                 className={`px-4 md:px-6 py-2 md:py-3 rounded-xl text-sm font-medium transition-all duration-300 ${currentCase === index
                     ? 'bg-gradient-to-r from-emerald-500 to-blue-500 text-white shadow-lg'
                     : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
                   }`}
               >
-                {caseStudy.company}
+                {strapiStories.length > 0 
+                  ? (caseStudy as TransformationStory).empresa || `Historia ${index + 1}`
+                  : (caseStudy as any).company
+                }
               </button>
             ))}
           </div>
@@ -210,14 +307,20 @@ export function Cases() {
             >
               <div className="relative overflow-hidden rounded-2xl md:rounded-3xl group">
                 <Image
-                  src={cases[currentCase].image}
-                  alt={cases[currentCase].company}
+                  src={strapiStories.length > 0 
+                    ? `https://strapi-core.mainics.com${(activeCases[currentCase] as TransformationStory).image.formats.medium?.url || (activeCases[currentCase] as TransformationStory).image.url}`
+                    : (activeCases[currentCase] as any).image
+                  }
+                  alt={strapiStories.length > 0 
+                    ? (activeCases[currentCase] as TransformationStory).image.alternativeText || (activeCases[currentCase] as TransformationStory).titulo
+                    : (activeCases[currentCase] as any).company
+                  }
                   width={600}
                   height={400}
-                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
-                  style={{ height: '280px', minHeight: '280px' }}
+                  className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                  style={{ height: '380px', minHeight: '380px' }}
                 />
-                <div className={`absolute inset-0 bg-gradient-to-t ${cases[currentCase].color} opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
+                <div className={`absolute inset-0 bg-gradient-to-t ${strapiStories.length > 0 ? 'from-blue-500 to-purple-600' : (activeCases[currentCase] as any).color} opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
 
                 {/* Overlay pattern */}
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20" />
@@ -241,7 +344,7 @@ export function Cases() {
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse" />
                 <span className="text-emerald-400 font-semibold text-sm uppercase tracking-wider">
-                  Caso de Estudio {currentCase + 1} de {cases.length}
+                  Caso de Estudio {currentCase + 1} de {activeCases.length}
                 </span>
               </div>
 
@@ -249,20 +352,32 @@ export function Cases() {
               <div className="space-y-3 md:space-y-4">
                 <div>
                   <h3 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider mb-2 md:mb-3">
-                    {cases[currentCase].company}
+                    {strapiStories.length > 0 
+                      ? (activeCases[currentCase] as TransformationStory).empresa || `Historia ${currentCase + 1}`
+                      : (activeCases[currentCase] as any).company
+                    }
                   </h3>
                   <h4 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 md:mb-4 text-white leading-tight">
-                    {cases[currentCase].title}
+                    {strapiStories.length > 0 
+                      ? (activeCases[currentCase] as TransformationStory).titulo
+                      : (activeCases[currentCase] as any).title
+                    }
                   </h4>
                 </div>
                 <p className="text-slate-300 text-base md:text-lg leading-relaxed">
-                  {cases[currentCase].description}
+                  {strapiStories.length > 0 
+                    ? (activeCases[currentCase] as TransformationStory).descripcion
+                    : (activeCases[currentCase] as any).description
+                  }
                 </p>
               </div>
 
               {/* Results - Enhanced */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-                {cases[currentCase].results.map((result, index) => (
+                {(strapiStories.length > 0 
+                  ? (activeCases[currentCase] as TransformationStory).mejoras.mejoras
+                  : (activeCases[currentCase] as any).results
+                ).map((result: any, index: number) => (
                   <motion.div
                     key={index}
                     className="relative p-3 md:p-4 bg-slate-800/40 backdrop-blur-xl rounded-xl border border-slate-600/30 hover:border-emerald-500/50 transition-all duration-300 group"
@@ -276,10 +391,16 @@ export function Cases() {
 
                     <div className="text-center">
                       <div className="text-xl md:text-2xl font-bold text-emerald-400 mb-1 group-hover:scale-110 transition-transform duration-300">
-                        {result.metric}
+                        {strapiStories.length > 0 
+                          ? `${result.porcentaje}%`
+                          : result.metric
+                        }
                       </div>
                       <div className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
-                        {result.description}
+                        {strapiStories.length > 0 
+                          ? result.descripcion
+                          : result.description
+                        }
                       </div>
                     </div>
 
@@ -296,7 +417,10 @@ export function Cases() {
                   Tecnologías Implementadas:
                 </h5>
                 <div className="flex flex-wrap gap-2">
-                  {cases[currentCase].technologies.map((tech, index) => (
+                  {(strapiStories.length > 0 
+                    ? (activeCases[currentCase] as TransformationStory).tecnologias.tecnologias
+                    : (activeCases[currentCase] as any).technologies
+                  ).map((tech: string, index: number) => (
                     <motion.span
                       key={index}
                       className="px-3 py-1.5 bg-slate-700/50 backdrop-blur-sm text-xs md:text-sm text-slate-300 rounded-full border border-slate-600/50 hover:border-blue-500/50 hover:bg-slate-600/50 transition-all duration-300"
@@ -330,7 +454,7 @@ export function Cases() {
         {/* Enhanced Progress Dots */}
         <div className="flex justify-center mt-8 md:mt-10">
           <div className="flex items-center gap-3 bg-slate-800/40 backdrop-blur-sm rounded-full px-4 py-2 border border-slate-600/30">
-            {cases.map((_, index) => (
+            {activeCases.map((_, index) => (
               <button
                 key={index}
                 onClick={() => handleManualCaseSelect(index)}
@@ -342,7 +466,7 @@ export function Cases() {
             ))}
             <div className="w-px h-4 bg-slate-600 mx-2" />
             <span className="text-xs text-slate-400">
-              {currentCase + 1} / {cases.length}
+              {currentCase + 1} / {activeCases.length}
             </span>
             {isAutoPlaying && (
               <>
@@ -397,12 +521,12 @@ export function Cases() {
       </div>
 
       {/* Diffuser transition to next section */}
-      <SectionDiffuser
+      {/* <SectionDiffuser
         fromColor="#0f172a"
         toColor="#020617"
         variant="wave"
         height="md"
-      />
+      /> */}
     </section>
   )
 }

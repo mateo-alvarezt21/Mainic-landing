@@ -6,6 +6,26 @@ import { useEffect, useState } from 'react'
 import { getPostsByCategory, decodeHtmlEntities } from '@/lib/wp'
 import type { WPPost } from '@/lib/wp'
 
+interface CompanyFromEndpoint {
+  name: string
+  logo: string
+}
+
+const fetchCompaniesFromEndpoint = async (): Promise<CompanyFromEndpoint[]> => {
+  try {
+    // Por ahora usamos la imagen específica que proporcionaste
+    return [
+      {
+        name: 'Empresa de Confianza',
+        logo: 'https://strapi-core.mainics.com/uploads/BLANCO_d64b3634d7.png'
+      }
+    ]
+  } catch (error) {
+    console.error('Error al crear datos de empresas:', error)
+    return []
+  }
+}
+
 const clients = [
   // {
   //   name: 'Microsoft',
@@ -43,15 +63,24 @@ const clients = [
 
 export function Clients() {
   const [clientsData, setClientsData] = useState<WPPost[]>([])
+  const [endpointCompanies, setEndpointCompanies] = useState<CompanyFromEndpoint[]>([])
 
   useEffect(() => {
     const fetchClientsData = async () => {
       try {
-        const data = await getPostsByCategory('clientes', 20)
-        console.log('Posts de clientes desde WordPress:', data)
-        setClientsData(data)
+        // Fetch from endpoint first
+        const endpointData = await fetchCompaniesFromEndpoint()
+        console.log('Companies from endpoint:', endpointData)
+        setEndpointCompanies(endpointData)
+        
+        // Fallback to WordPress if no endpoint data
+        if (endpointData.length === 0) {
+          const wpData = await getPostsByCategory('clientes', 20)
+          console.log('Posts de clientes desde WordPress:', wpData)
+          setClientsData(wpData)
+        }
       } catch (error) {
-        console.error('Error al obtener posts de clientes:', error)
+        console.error('Error al obtener datos de clientes:', error)
       }
     }
     
@@ -84,8 +113,69 @@ export function Clients() {
           </p>
         </motion.div>
 
-        {/* WordPress clients grid */}
-        {clientsData.length > 0 && (
+        {/* Endpoint companies grid */}
+        {endpointCompanies.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <div className={`mx-auto px-4 ${
+              endpointCompanies.length === 1 
+                ? 'max-w-xs' 
+                : endpointCompanies.length === 2 
+                  ? 'max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl' 
+                  : endpointCompanies.length <= 4
+                    ? 'max-w-3xl lg:max-w-4xl'
+                    : 'max-w-5xl lg:max-w-6xl'
+            }`}>
+              <div className={`flex flex-wrap justify-center items-center ${
+                endpointCompanies.length === 1 
+                  ? 'gap-0' 
+                  : endpointCompanies.length === 2 
+                    ? 'gap-4 sm:gap-6 md:gap-8 lg:gap-12' 
+                    : endpointCompanies.length <= 4
+                      ? 'gap-4 sm:gap-6 md:gap-8 lg:gap-12'
+                      : 'gap-3 sm:gap-4 md:gap-6 lg:gap-8'
+              }`}>
+                {endpointCompanies.map((company, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      transition: { duration: 0.2 }
+                    }}
+                    transition={{ 
+                      duration: 0.5, 
+                      delay: index * 0.1 
+                    }}
+                    viewport={{ once: true }}
+                    className="relative"
+                    title={company.name}
+                  >
+                    <Image
+                      src={company.logo}
+                      alt={company.name}
+                      width={280}
+                      height={160}
+                      className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* WordPress clients grid (fallback) */}
+        {endpointCompanies.length === 0 && clientsData.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -153,7 +243,7 @@ export function Clients() {
 
         {/* Fallback static logos */}
         <div className="relative">
-          {clientsData.length === 0 && clients.length > 0 ? (
+          {endpointCompanies.length === 0 && clientsData.length === 0 && clients.length > 0 ? (
             <div className={`mx-auto px-4 ${
               clients.length === 1 
                 ? 'max-w-xs' 
@@ -220,8 +310,8 @@ export function Clients() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-2xl mx-auto">
             {[
               { 
-                number: clientsData.length > 0 ? clientsData.length.toString() : clients.length.toString(), 
-                label: (clientsData.length > 0 ? clientsData.length : clients.length) === 1 ? 'Cliente de Confianza' : 'Clientes de Confianza' 
+                number: endpointCompanies.length > 0 ? endpointCompanies.length.toString() : clientsData.length > 0 ? clientsData.length.toString() : clients.length.toString(), 
+                label: (endpointCompanies.length > 0 ? endpointCompanies.length : clientsData.length > 0 ? clientsData.length : clients.length) === 1 ? 'Cliente de Confianza' : 'Clientes de Confianza' 
               },
               { number: '24/7', label: 'Soporte Dedicado' },
               { number: '100%', label: 'Compromiso' }

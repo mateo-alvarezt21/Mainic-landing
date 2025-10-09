@@ -26,7 +26,7 @@ export function Header() {
           : 'bg-transparent'
       )}
     >
-      <nav className="container mx-auto flex items-center justify-between py-4 px-4 sm:px-6">
+      <nav className="container mx-auto flex items-center justify-between h-20 px-4 sm:px-6">
         <Logo />
         
         <DesktopNav 
