@@ -1,6 +1,5 @@
 import { memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from '@/components/ui'
 import type { NavItem } from '@/types/navigation'
 
 interface MobileMenuItemProps {
@@ -42,14 +41,14 @@ const MobileMenuItem = memo(({ label, onClick, index }: MobileMenuItemProps) => 
     >
       <button
         onClick={onClick}
-        className="group relative block w-full text-left text-white font-medium py-3 px-4 rounded-lg overflow-hidden border border-transparent hover:border-primary-500/30 transition-colors duration-300"
+        className="group relative block w-full text-left text-gray-900 dark:text-white font-medium py-3 px-4 rounded-lg overflow-hidden border border-transparent hover:border-primary-500/30 transition-colors duration-300"
       >
-        <span className="relative z-10 transition-colors duration-300 group-hover:text-primary-500">
+        <span className="relative z-10 transition-colors duration-300 group-hover:text-primary-500 dark:group-hover:text-primary-400">
           {label}
         </span>
 
         <motion.div
-          className="absolute inset-0 bg-dark-700/50"
+          className="absolute inset-0 bg-gray-200/50 dark:bg-dark-700/50"
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -122,28 +121,6 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
     }
   }
 
-  const ctaButtonVariants = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-      scale: 0.9
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        delay: navItems.length * 0.08 + 0.2,
-        duration: 0.4,
-        ease: [0.6, -0.05, 0.01, 0.99] as const
-      }
-    },
-    exit: {
-      opacity: 0,
-      y: 10,
-      transition: { duration: 0.2 }
-    }
-  }
 
   return (
     <AnimatePresence mode="wait">
@@ -154,7 +131,7 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed inset-0 bg-dark-900/60 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-gray-900/60 dark:bg-dark-900/60 backdrop-blur-sm z-40 lg:hidden"
             onClick={() => onNavClick('')}
           />
 
@@ -163,7 +140,7 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed top-[73px] left-0 right-0 z-50 lg:hidden bg-gradient-to-b from-dark-900 via-dark-800 to-dark-900 backdrop-blur-xl border-b border-primary-500/20 shadow-2xl shadow-primary-500/5"
+            className="fixed top-[73px] left-0 right-0 z-50 lg:hidden bg-gradient-to-b from-white via-gray-50 to-white dark:from-dark-900 dark:via-dark-800 dark:to-dark-900 backdrop-blur-xl border-b border-primary-500/20 shadow-2xl shadow-primary-500/5"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-transparent pointer-events-none" />
 
@@ -178,26 +155,6 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
                   />
                 ))}
 
-                <motion.div
-                  variants={ctaButtonVariants}
-                  className="pt-4"
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <Button
-                    variant="primary"
-                    className="w-full relative overflow-hidden group shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-shadow duration-300"
-                    onClick={() => onNavClick('contact')}
-                  >
-                    <span className="relative z-10">Consulta Gratuita</span>
-
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600"
-                      initial={{ x: '-100%' }}
-                      whileHover={{ x: '100%' }}
-                      transition={{ duration: 0.5, ease: 'easeInOut' }}
-                    />
-                  </Button>
-                </motion.div>
               </div>
             </div>
 

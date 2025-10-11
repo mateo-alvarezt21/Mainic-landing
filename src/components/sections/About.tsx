@@ -95,7 +95,7 @@ export default function About() {
   ] : defaultStats
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-900" id="about">
+    <section className="py-20 relative overflow-hidden" id="about" style={{ backgroundColor: 'var(--bg-secondary)' }}>
       <div className="w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -106,11 +106,11 @@ export default function About() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
             Sobre Nosotros
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Somos un equipo apasionado por la tecnología, dedicado a transformar ideas en soluciones digitales 
+          <p className="text-xl max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+            Somos un equipo apasionado por la tecnología, dedicado a transformar ideas en soluciones digitales
             que impulsan el crecimiento de las empresas colombianas.
           </p>
         </motion.div>
@@ -124,23 +124,23 @@ export default function About() {
           className="grid lg:grid-cols-2 gap-12 items-center mb-20"
         >
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <h3 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
               Nuestra Historia
             </h3>
-            <div className="space-y-4 text-gray-600 dark:text-gray-300">
+            <div className="space-y-4" style={{ color: 'var(--text-secondary)' }}>
               <p>
-                Mainics nació con la visión de democratizar la tecnología para las empresas de todos los tamaños. 
-                Comenzamos como un pequeño equipo de desarrolladores apasionados y hemos crecido hasta convertirnos 
+                Mainics nació con la visión de democratizar la tecnología para las empresas de todos los tamaños.
+                Comenzamos como un pequeño equipo de desarrolladores apasionados y hemos crecido hasta convertirnos
                 en un socio estratégico para empresas que buscan la excelencia digital.
               </p>
               <p>
-                Nos especializamos en automatización de procesos, desarrollo de software personalizado y 
-                transformación digital. Cada proyecto es una oportunidad para crear algo extraordinario 
+                Nos especializamos en automatización de procesos, desarrollo de software personalizado y
+                transformación digital. Cada proyecto es una oportunidad para crear algo extraordinario
                 que genere valor real para nuestros clientes.
               </p>
               <p>
-                Creemos firmemente que la tecnología debe ser accesible, práctica y orientada a resultados. 
-                Por eso, trabajamos estrechamente con cada cliente para entender sus necesidades únicas 
+                Creemos firmemente que la tecnología debe ser accesible, práctica y orientada a resultados.
+                Por eso, trabajamos estrechamente con cada cliente para entender sus necesidades únicas
                 y crear soluciones que superen sus expectativas.
               </p>
             </div>
@@ -154,12 +154,13 @@ export default function About() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center"
+                className="p-6 rounded-lg shadow-lg text-center"
+                style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-primary)', borderWidth: '1px' }}
               >
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                <div className="text-3xl font-bold mb-2 text-blue-600 dark:text-blue-400">
                   {stat.number}
                 </div>
-                <div className="text-gray-600 dark:text-gray-300 text-sm">
+                <div className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                   {stat.label}
                 </div>
               </motion.div>
@@ -175,10 +176,10 @@ export default function About() {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-12">
+          <h3 className="text-2xl font-bold text-center mb-12" style={{ color: 'var(--text-primary)' }}>
             Nuestros Valores
           </h3>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => {
               const Icon = value.icon
@@ -194,10 +195,10 @@ export default function About() {
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full mb-4 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/40 transition-colors">
                     <Icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                   </div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  <h4 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
                     {value.title}
                   </h4>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     {value.description}
                   </p>
                 </motion.div>
@@ -214,24 +215,24 @@ export default function About() {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-8"
         >
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="p-8 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-primary)', borderWidth: '1px' }}>
+            <h4 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
               Nuestra Misión
             </h4>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Empoderar a las empresas colombianas a través de soluciones tecnológicas innovadoras 
-              que optimicen sus procesos, incrementen su productividad y les permitan competir 
+            <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              Empoderar a las empresas colombianas a través de soluciones tecnológicas innovadoras
+              que optimicen sus procesos, incrementen su productividad y les permitan competir
               exitosamente en la era digital.
             </p>
           </div>
-          
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+
+          <div className="p-8 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-primary)', borderWidth: '1px' }}>
+            <h4 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
               Nuestra Visión
             </h4>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Ser reconocidos como el líder en desarrollo de software y automatización en Colombia, 
-              siendo el socio tecnológico de confianza para empresas que buscan transformar 
+            <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              Ser reconocidos como el líder en desarrollo de software y automatización en Colombia,
+              siendo el socio tecnológico de confianza para empresas que buscan transformar
               su futuro a través de la innovación.
             </p>
           </div>

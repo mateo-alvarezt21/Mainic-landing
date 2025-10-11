@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -79,8 +80,10 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1193d4" />
       </head>
-      <body className={`${inter.className} bg-dark-900 text-white antialiased`}>
-        {children}
+      <body className={`${inter.className} antialiased`} style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
         
         {/* Schema.org structured data */}
         <script

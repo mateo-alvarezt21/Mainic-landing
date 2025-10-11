@@ -1,29 +1,81 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light mode colors */
+  --bg-primary: #ffffff;
+  --bg-primary-rgb: 255, 255, 255;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --border-primary: #e5e7eb;
+  --border-secondary: #d1d5db;
+  --button-text: #1f2937;
+
+  /* Particle colors for light mode - visible on light backgrounds */
+  --particle-primary: rgba(37, 99, 235, 0.6);
+  --particle-secondary: rgba(59, 130, 246, 0.6);
+  --particle-accent: rgba(52, 211, 153, 0.6);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  /* Dark mode colors */
+  --bg-primary: #111618;
+  --bg-primary-rgb: 17, 22, 24;
+  --bg-secondary: #181E21;
+  --bg-tertiary: #20272B;
+  --text-primary: #ffffff;
+  --text-secondary: #e5e7eb;
+  --text-tertiary: #9ca3af;
+  --border-primary: #374151;
+  --border-secondary: #4b5563;
+  --button-text: #ffffff;
+
+  /* Particle colors for dark mode - same as before */
+  --particle-primary: rgba(96, 165, 250, 0.6);
+  --particle-secondary: rgba(129, 140, 248, 0.6);
+  --particle-accent: rgba(52, 211, 153, 0.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Logo theme handling */
+.logo-theme {
+  /* Default: keep original colors for light mode */
+  filter: none;
 }
 
+.dark .logo-theme {
+  /* Dark mode: invert logo to white */
+  filter: brightness(0) invert(1);
+}
+
+/* Company logos - need different treatment */
+.company-logo {
+  /* Light mode: make logos dark so they're visible on white background */
+  filter: brightness(0.3) contrast(1.2);
+}
+
+.dark .company-logo {
+  /* Dark mode: make logos white */
+  filter: brightness(0) invert(1);
+}
+
+/* Button theme handling */
+.cta-button {
+  color: #1f2937 !important; /* Dark gray text in light mode */
+}
+
+.dark .cta-button {
+  color: #ffffff !important; /* White text in dark mode */
+}
+
+/* Remove global body styles to allow Tailwind dark mode to work
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+*/
 
 @keyframes gradient {
   0% {

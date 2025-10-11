@@ -47,7 +47,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-dark-900 border-t border-gray-800">
+    <footer className="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-gray-800">
       <div className="container mx-auto">
         {/* Main Footer Content */}
         <div className="py-16">
@@ -67,7 +67,7 @@ export function Footer() {
                 <span className="text-2xl font-bold">Mainic</span>
               </div>
               
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                 Transformamos empresas a través de la automatización y la innovación 
                 tecnológica. Construimos el futuro, una línea de código a la vez.
               </p>
@@ -84,7 +84,7 @@ export function Footer() {
                       aria-label={social.label}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
-                      className="w-10 h-10 bg-dark-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-primary-400 hover:bg-dark-600 transition-all"
+                      className="w-10 h-10 bg-gray-200 dark:bg-dark-700 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-400 hover:bg-gray-300 dark:hover:bg-dark-600 transition-all"
                     >
                       <Icon className="w-5 h-5" />
                     </motion.a>
@@ -108,7 +108,7 @@ export function Footer() {
                     <li key={linkIndex}>
                       <Link
                         href={link.href}
-                        className="text-gray-400 hover:text-primary-400 transition-colors inline-flex items-center group"
+                        className="text-gray-600 dark:text-gray-400 hover:text-primary-400 transition-colors inline-flex items-center group"
                       >
                         {link.label}
                         <ArrowUp className="ml-1 w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity rotate-45" />
@@ -127,14 +127,14 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="border-t border-gray-800 py-8"
+          className="border-t border-gray-200 dark:border-gray-800 py-8"
         >
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             <div>
               <h4 className="text-lg font-semibold mb-2">
                 Mantente al día con las últimas tendencias tecnológicas
               </h4>
-              <p className="text-gray-400">
+              <p className="text-gray-600 dark:text-gray-400">
                 Recibe insights exclusivos y actualizaciones sobre automatización empresarial.
               </p>
             </div>
@@ -143,7 +143,7 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="tu@email.com"
-                className="flex-1 px-4 py-3 bg-dark-700 border border-gray-600 rounded-lg text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="flex-1 px-4 py-3 bg-white dark:bg-dark-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -157,17 +157,17 @@ export function Footer() {
         </motion.div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-gray-800 py-8">
+        <div className="border-t border-gray-200 dark:border-gray-800 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-gray-400 text-sm text-center md:text-left">
+            <p className="text-gray-600 dark:text-gray-400 text-sm text-center md:text-left">
               © 2025 Mainic Software Services. Todos los Derechos Reservados.
             </p>
             
             <div className="flex items-center space-x-6">
-              <Link href="/privacy" className="text-gray-400 hover:text-primary-400 text-sm transition-colors">
+              <Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-primary-400 text-sm transition-colors">
                 Política de Privacidad
               </Link>
-              <Link href="/terms" className="text-gray-400 hover:text-primary-400 text-sm transition-colors">
+              <Link href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-primary-400 text-sm transition-colors">
                 Términos de Servicio
               </Link>
               
@@ -175,7 +175,7 @@ export function Footer() {
                 onClick={scrollToTop}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="w-8 h-8 bg-dark-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-primary-400 hover:bg-dark-600 transition-all"
+                className="w-8 h-8 bg-gray-200 dark:bg-dark-700 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-400 hover:bg-gray-300 dark:hover:bg-dark-600 transition-all"
                 aria-label="Volver al inicio"
               >
                 <ArrowUp className="w-4 h-4" />

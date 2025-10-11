@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform, useMotionValue, animate } from 'framer-motion'
 // import { Button } from '@/components/ui'
-import { ArrowRight, /* Play, */ Sparkles } from 'lucide-react'
+import { /* Play, */ Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 // import { getPageInfo } from '@/lib/wp' // Comentado - WordPress no disponible
@@ -103,21 +103,24 @@ export function Hero() {
   //   }
   // }
 
-  const scrollToContact = () => {
-    const contactSection = document.getElementById('contact')
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  // const scrollToContact = () => {
+  //   const contactSection = document.getElementById('contact')
+  //   if (contactSection) {
+  //     contactSection.scrollIntoView({ behavior: 'smooth' })
+  //   }
+  // }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-0">
       {/* Multi-layer parallax background */}
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 z-0"
         style={{ y: yFast, scale, rotateX: rotate }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900" />
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: 'var(--bg-primary)' }}
+        />
         <div className="absolute inset-0 bg-gradient-radial from-primary-500/20 via-transparent to-transparent" />
       </motion.div>
 
@@ -195,8 +198,8 @@ export function Hero() {
       </motion.div>
 
       {/* Main content */}
-      <motion.div 
-        className="relative z-10 w-full px-4 sm:px-6"
+      <motion.div
+        className="relative z-20 w-full px-4 sm:px-6"
         style={{ opacity }}
       >
         <div className="max-w-7xl mx-auto pt-16 sm:pt-8 md:pt-0">
@@ -222,12 +225,7 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight"
               style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.3) 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                filter: 'drop-shadow(0 8px 32px rgba(255,255,255,0.1))',
-                textShadow: '0 0 40px rgba(255,255,255,0.3)'
+                color: 'var(--text-primary)'
               }}
             >
               Automatiza tu{' '}
@@ -277,121 +275,53 @@ export function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-lg md:text-xl text-gray-300 mb-10 max-w-4xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl mb-10 max-w-4xl mx-auto leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
             >
               Transformamos empresas con{' '}
               <span className="text-primary-400 font-semibold">soluciones de software personalizadas</span>,
               automatización de procesos y análisis de datos avanzados que impulsan el crecimiento exponencial.
             </motion.p>
 
-            {/* Single CTA Button */}
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex justify-center"
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
-              <motion.button
-                onClick={scrollToContact}
-                className="group relative overflow-hidden px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-500 text-white font-bold text-lg shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                animate={{
-                  boxShadow: [
-                    "0 20px 40px rgba(16, 185, 129, 0.3)",
-                    "0 25px 50px rgba(59, 130, 246, 0.4)",
-                    "0 20px 40px rgba(168, 85, 247, 0.3)",
-                    "0 20px 40px rgba(16, 185, 129, 0.3)"
-                  ]
-                }}
-                transition={{
-                  boxShadow: {
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
+              <button
+                onClick={() => {
+                  const contactSection = document.getElementById('contact')
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' })
                   }
                 }}
+                className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-3"
               >
-                {/* Animated background gradient */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  animate={{
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  style={{
-                    backgroundSize: '200% 200%'
-                  }}
-                />
-                
-                {/* Sparkle effect */}
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{
-                    background: [
-                      'radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%)',
-                      'radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%)',
-                      'radial-gradient(circle at 40% 40%, rgba(255,255,255,0.1) 0%, transparent 50%)',
-                      'radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%)'
-                    ]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                
-                {/* Pulse ring */}
-                <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-purple-500 rounded-2xl opacity-20 group-hover:opacity-40"
-                  animate={{
-                    scale: [1, 1.05, 1],
-                    opacity: [0.2, 0.4, 0.2]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                
-                <span className="relative z-10 flex items-center gap-3">
-                  <motion.span
-                    animate={{
-                      textShadow: [
-                        "0 0 10px rgba(255,255,255,0.5)",
-                        "0 0 20px rgba(255,255,255,0.8)",
-                        "0 0 10px rgba(255,255,255,0.5)"
-                      ]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    🚀 Solicitar Consulta Gratuita
-                  </motion.span>
-                  <motion.div
-                    animate={{
-                      x: [0, 5, 0]
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
-                  </motion.div>
-                </span>
-              </motion.button>
+                <span>Comienza Hoy</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
+              <button
+                onClick={() => {
+                  const servicesSection = document.getElementById('services')
+                  if (servicesSection) {
+                    servicesSection.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
+                className="px-8 py-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 font-semibold"
+                style={{
+                  borderColor: 'var(--border-secondary)',
+                  color: 'var(--text-primary)',
+                  backgroundColor: 'transparent'
+                }}
+              >
+                Ver Servicios
+              </button>
             </motion.div>
+
           </div>
 
           {/* Companies that trust us */}
@@ -402,7 +332,7 @@ export function Hero() {
             className="mt-16 max-w-4xl mx-auto"
           >
             <div className="text-center mb-8">
-              <p className="text-gray-400 text-base mb-6">Empresas que confían en nosotros</p>
+              <p className="text-base mb-6" style={{ color: 'var(--text-secondary)' }}>Empresas que confían en nosotros</p>
             </div>
             <div className="flex justify-center items-center">
               {endpointCompanies.length > 0 ? (
@@ -427,7 +357,7 @@ export function Hero() {
                       alt={company.name}
                       width={350}
                       height={200}
-                      className="object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity duration-300"
+                      className="object-contain company-logo opacity-80 hover:opacity-100 transition-opacity duration-300"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none'
                       }}
@@ -435,7 +365,7 @@ export function Hero() {
                   </motion.div>
                 ))
               ) : (
-                <div className="text-gray-500 text-sm">Cargando empresas...</div>
+                <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Cargando empresas...</div>
               )}
             </div>
           </motion.div>

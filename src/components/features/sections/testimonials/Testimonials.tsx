@@ -44,9 +44,9 @@ export function Testimonials() {
   const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500])
 
   return (
-    <section ref={ref} className="py-20 bg-dark-900 relative overflow-hidden">
+    <section ref={ref} className="py-20 relative overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {/* Enhanced parallax background decoration */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 opacity-5"
         style={{ y: yBackground, rotate: rotateBackground, scale: scaleBackground }}
       >
@@ -54,9 +54,9 @@ export function Testimonials() {
         <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-gradient-to-r from-green-500 to-blue-500 rounded-full blur-3xl" />
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2" />
       </motion.div>
-      
+
       {/* Floating geometric shapes */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 opacity-10"
         style={{ y: yBackground, perspective }}
       >
@@ -74,11 +74,11 @@ export function Testimonials() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Lo que dicen nuestros <span className="gradient-text">Clientes</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+            Lo que dicen nuestros <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">Clientes</span>
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            La satisfacción de nuestros clientes es nuestra mejor referencia. 
+          <p className="text-xl max-w-3xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+            La satisfacción de nuestros clientes es nuestra mejor referencia.
             Escucha lo que tienen que decir sobre nuestro trabajo.
           </p>
         </motion.div>
@@ -89,38 +89,40 @@ export function Testimonials() {
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ 
+              whileHover={{
                 y: -10,
                 rotateX: 5,
                 rotateY: index % 2 === 0 ? 2 : -2,
                 scale: 1.02
               }}
-              transition={{ 
-                duration: 0.6, 
-                delay: index * 0.2 
+              transition={{
+                duration: 0.6,
+                delay: index * 0.2
               }}
               viewport={{ once: true }}
-              className="bg-dark-700 rounded-2xl p-8 border border-gray-600 hover:border-primary-500 transition-colors relative transform-gpu"
+              className="rounded-2xl p-8 border hover:border-primary-500 transition-all relative transform-gpu"
               style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border-primary)',
                 perspective: '1000px',
                 transformStyle: 'preserve-3d'
               }}
             >
               {/* Quote icon */}
               <Quote className="absolute top-6 right-6 w-8 h-8 text-primary-500 opacity-50" />
-              
+
               {/* Rating */}
               <div className="flex items-center mb-4">
                 {Array.from({ length: testimonial.rating }).map((_, starIndex) => (
                   <Star key={starIndex} className="w-5 h-5 text-yellow-400 fill-current" />
                 ))}
               </div>
-              
+
               {/* Testimonial text */}
-              <p className="text-gray-300 mb-6 leading-relaxed italic">
+              <p className="mb-6 leading-relaxed italic text-base" style={{ color: 'var(--text-secondary)' }}>
                 &ldquo;{testimonial.text}&rdquo;
               </p>
-              
+
               {/* Author info */}
               <div className="flex items-center">
                 <div className="w-12 h-12 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full flex items-center justify-center mr-4">
@@ -129,8 +131,8 @@ export function Testimonials() {
                   </span>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-400">{testimonial.position}</p>
+                  <h4 className="font-semibold" style={{ color: 'var(--text-primary)' }}>{testimonial.name}</h4>
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>{testimonial.position}</p>
                   <p className="text-sm text-primary-400">{testimonial.company}</p>
                 </div>
               </div>

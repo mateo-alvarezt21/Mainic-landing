@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Header } from '@/components/layout/header/Header'
+import { ClientHeader } from '@/components/layout/header/ClientHeader'
 import { Hero } from '@/components/features/sections/hero'
 import { Services } from '@/components/features/sections/services'
 import { TechStack } from '@/components/features/sections/tech-stack'
@@ -37,15 +37,15 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-dark-900 text-white">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
       {/* Progress indicator */}
       <ScrollProgress />
       
       {/* Floating background elements */}
       <FloatingElements />
       
-      {/* Header */}
-      <Header />
+      {/* Header - Client component */}
+      <ClientHeader />
       
       {/* Main content */}
       <main className="overflow-hidden">

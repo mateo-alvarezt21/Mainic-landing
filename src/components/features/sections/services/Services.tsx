@@ -63,11 +63,11 @@ export function Services() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3])
 
   return (
-    <section ref={ref} id="services" className="py-16 md:py-24 bg-slate-950 relative overflow-hidden">
+    <section ref={ref} id="services" className="py-16 md:py-24 relative overflow-hidden" style={{ backgroundColor: 'var(--bg-secondary)' }}>
       {/* Enhanced Background */}
       <div className="absolute inset-0">
         {/* Animated grid */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/50 to-slate-800/50">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(var(--bg-primary-rgb), 0.8), rgba(var(--bg-primary-rgb), 0.6))' }}>
           <div className="absolute inset-0" style={{
             backgroundImage: `
               radial-gradient(circle at 25% 25%, #1e40af20 0%, transparent 50%),
@@ -101,8 +101,9 @@ export function Services() {
           ].map((particle, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-blue-400/60 rounded-full"
+              className="absolute w-1 h-1 rounded-full"
               style={{
+                backgroundColor: 'var(--particle-secondary)',
                 left: `${particle.left}%`,
                 top: `${particle.top}%`,
               }}
@@ -133,15 +134,15 @@ export function Services() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
             <Zap className="w-4 h-4 text-blue-400" />
-            <span className="text-blue-300 text-sm font-medium">Nuestros Servicios</span>
+            <span className="text-blue-400 dark:text-blue-300 text-sm font-medium">Nuestros Servicios</span>
           </div>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            <span className="text-white">Soluciones </span>
+            <span style={{ color: 'var(--text-primary)' }}>Soluciones </span>
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">
               Tecnológicas Integrales
             </span>
           </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             Mainic Software Services ofrece un conjunto completo de soluciones 
             adaptadas a las necesidades específicas de tu negocio.
           </p>
@@ -170,7 +171,7 @@ export function Services() {
                 }}
               >
                 {/* Card */}
-                <div className="relative h-full min-h-[400px] md:min-h-[450px] p-6 md:p-8 rounded-2xl md:rounded-3xl overflow-hidden backdrop-blur-xl bg-slate-900/40 border border-slate-700/50 hover:border-slate-600/80 transition-all duration-500 hover:bg-slate-900/60">
+                <div className="relative h-full min-h-[400px] md:min-h-[450px] p-6 md:p-8 rounded-2xl md:rounded-3xl overflow-hidden backdrop-blur-xl transition-all duration-500" style={{ backgroundColor: 'rgba(var(--bg-primary-rgb), 0.4)', borderColor: 'var(--border-primary)', borderWidth: '1px' }}>
                   
                   {/* Background gradient */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -194,7 +195,7 @@ export function Services() {
                         delay: index * 0.5 
                       }}
                     >
-                      <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${service.color} p-3 md:p-4 shadow-lg ring-1 ring-white/20`}>
+                      <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${service.color} p-3 md:p-4 shadow-lg ring-1 ring-white/20 dark:ring-white/20`}>
                         <Icon className="w-full h-full text-white drop-shadow-sm" />
                       </div>
                     </motion.div>
@@ -203,11 +204,11 @@ export function Services() {
                     <div className="flex-1 space-y-4 md:space-y-6">
                       {/* Title */}
                       <div>
-                        <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4 leading-tight group-hover:text-blue-100 transition-colors duration-300">
+                        <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 leading-tight transition-colors duration-300 text-gray-900 dark:text-white">
                           <span className="md:hidden">{service.shortTitle}</span>
                           <span className="hidden md:inline">{service.title}</span>
                         </h3>
-                        <p className="text-sm md:text-base text-slate-300 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
+                        <p className="text-sm md:text-base leading-relaxed transition-colors duration-300" style={{ color: 'var(--text-secondary)' }}>
                           {service.description}
                         </p>
                       </div>
@@ -217,7 +218,7 @@ export function Services() {
                         {service.features.map((feature, featureIndex) => (
                           <motion.div
                             key={featureIndex}
-                            className="flex items-center gap-3 text-xs md:text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300"
+                            className="flex items-center gap-3 text-xs md:text-sm transition-colors duration-300" style={{ color: 'var(--text-tertiary)' }}
                             initial={{ opacity: 0, x: -10 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ 
@@ -252,7 +253,7 @@ export function Services() {
                       transition={{ delay: index * 0.2 + 0.3 }}
                       viewport={{ once: true }}
                     >
-                      <button className="group/btn w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-600/50 hover:border-slate-500/80 text-slate-300 hover:text-white transition-all duration-300 text-sm font-medium">
+                      <button className="group/btn w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium" style={{ backgroundColor: 'rgba(var(--bg-primary-rgb), 0.8)', borderColor: 'var(--border-secondary)', borderWidth: '1px', color: 'var(--text-secondary)' }}>
                         <span>Saber Más</span>
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                       </button>
@@ -275,7 +276,7 @@ export function Services() {
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <p className="text-slate-400 mb-6 text-sm md:text-base">
+          <p className="mb-6 text-sm md:text-base" style={{ color: 'var(--text-secondary)' }}>
             ¿Listo para transformar tu negocio con tecnología de vanguardia?
           </p>
           <button className="group px-6 md:px-8 py-3 md:py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-3 mx-auto text-sm md:text-base">

@@ -186,7 +186,7 @@ export const Logo = memo(({ className = '' }: LogoProps) => {
             alt="Mainic Logo"
             width={112}
             height={112}
-            className="w-28 h-28 object-contain filter brightness-0 invert block"
+            className="w-28 h-28 object-contain block logo-theme"
             priority
             style={{ display: 'block', margin: 0, padding: 0 }}
           />
