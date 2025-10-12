@@ -14,17 +14,15 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light') // Default to light for SSR
-  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
     // Check localStorage and system preference
     const savedTheme = localStorage.getItem('theme') as Theme
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    
+
     const initialTheme = savedTheme || systemTheme
     setTheme(initialTheme)
-    
+
     // Apply theme to document - Tailwind only needs 'dark' class
     if (initialTheme === 'dark') {
       document.documentElement.classList.add('dark')

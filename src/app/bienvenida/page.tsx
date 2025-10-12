@@ -18,6 +18,14 @@ interface CompanyFromEndpoint {
   logo: string
 }
 
+interface StrapiEmpresa {
+  id: number
+  Nombre: string
+  logo: {
+    url: string
+  }
+}
+
 const fetchCompanyData = async (): Promise<CompanyData | null> => {
   try {
     const response = await fetch('https://strapi-core.mainics.com/empresa-data')
@@ -32,9 +40,9 @@ const fetchCompanyData = async (): Promise<CompanyData | null> => {
 const fetchCompaniesFromEndpoint = async (): Promise<CompanyFromEndpoint[]> => {
   try {
     const response = await fetch('https://strapi-core.mainics.com/empresas')
-    const data = await response.json()
+    const data: StrapiEmpresa[] = await response.json()
 
-    return data.map((empresa: any) => ({
+    return data.map((empresa) => ({
       name: empresa.Nombre,
       logo: `https://strapi-core.mainics.com${empresa.logo.url}`
     }))
