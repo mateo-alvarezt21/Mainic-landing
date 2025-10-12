@@ -13,15 +13,15 @@ interface CompanyFromEndpoint {
 
 const fetchCompaniesFromEndpoint = async (): Promise<CompanyFromEndpoint[]> => {
   try {
-    // Por ahora usamos la imagen específica que proporcionaste
-    return [
-      {
-        name: 'Empresa de Confianza',
-        logo: 'https://strapi-core.mainics.com/uploads/BLANCO_d64b3634d7.png'
-      }
-    ]
+    const response = await fetch('https://strapi-core.mainics.com/empresas')
+    const data = await response.json()
+
+    return data.map((empresa: any) => ({
+      name: empresa.Nombre,
+      logo: `https://strapi-core.mainics.com${empresa.logo.url}`
+    }))
   } catch (error) {
-    console.error('Error al crear datos de empresas:', error)
+    console.error('Error al obtener datos de empresas:', error)
     return []
   }
 }
