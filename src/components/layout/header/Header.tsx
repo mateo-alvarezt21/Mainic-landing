@@ -32,18 +32,18 @@ export function Header() {
     >
       <nav className="container mx-auto flex items-center justify-between h-20 px-4 sm:px-6">
         <Logo />
-        
-        <div className="flex items-center space-x-4">
-          <DesktopNav 
-            navItems={navItems} 
-            onNavClick={handleNavClick} 
+
+        <div className="flex items-center gap-2 sm:gap-4">
+          <DesktopNav
+            navItems={navItems}
+            onNavClick={handleNavClick}
           />
-          
+
           <ThemeToggle />
-          
-          <MobileMenuToggle 
-            isOpen={isMobileMenuOpen} 
-            onToggle={toggleMenu} 
+
+          <MobileMenuToggle
+            isOpen={isMobileMenuOpen}
+            onToggle={toggleMenu}
           />
         </div>
       </nav>

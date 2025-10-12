@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Settings, Code, BarChart3, ArrowRight, Zap } from 'lucide-react'
+import { Settings, Code, BarChart3, ArrowRight, Zap, Gamepad2, Cpu } from 'lucide-react'
 import { useRef } from 'react'
 
 const services = [
@@ -49,6 +49,36 @@ const services = [
     ],
     color: 'from-emerald-500 to-teal-500',
     bgGradient: 'from-emerald-500/20 to-teal-500/20'
+  },
+  {
+    id: 'gamedev',
+    icon: Gamepad2,
+    title: 'Desarrollo de Videojuegos',
+    shortTitle: 'Videojuegos',
+    description: 'Creamos experiencias interactivas y videojuegos innovadores para diferentes plataformas.',
+    features: [
+      'Juegos 2D y 3D',
+      'Multiplataforma',
+      'Diseño de mecánicas',
+      'Arte y animación'
+    ],
+    color: 'from-orange-500 to-red-500',
+    bgGradient: 'from-orange-500/20 to-red-500/20'
+  },
+  {
+    id: 'hardware',
+    icon: Cpu,
+    title: 'Armado de Equipos de Cómputo',
+    shortTitle: 'Hardware',
+    description: 'Ensamblamos y configuramos equipos de cómputo a medida para empresas y usuarios especializados.',
+    features: [
+      'PCs empresariales',
+      'Workstations personalizadas',
+      'Gaming y renderizado',
+      'Asesoría técnica'
+    ],
+    color: 'from-indigo-500 to-blue-600',
+    bgGradient: 'from-indigo-500/20 to-blue-600/20'
   }
 ]
 
@@ -122,8 +152,8 @@ export function Services() {
         </motion.div>
       </div>
       
-      <div className="w-full px-4 md:px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
+      <div className="w-full px-5 sm:px-6 md:px-8 relative z-10">
+        <div className="max-w-[1600px] mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -148,120 +178,112 @@ export function Services() {
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Services Grid - Compact Visual Design */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8">
           {services.map((service, index) => {
             const Icon = service.icon
-            
+
             return (
               <motion.div
                 key={service.id}
                 className="group relative"
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: index * 0.15,
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.08,
                   ease: "easeOut"
                 }}
                 viewport={{ once: true }}
-                whileHover={{ 
+                whileHover={{
                   y: -8,
-                  transition: { duration: 0.3 }
+                  transition: { duration: 0.2 }
                 }}
               >
-                {/* Card */}
-                <div className="relative h-full min-h-[400px] md:min-h-[450px] p-6 md:p-8 rounded-2xl md:rounded-3xl overflow-hidden backdrop-blur-xl transition-all duration-500" style={{ backgroundColor: 'rgba(var(--bg-primary-rgb), 0.4)', borderColor: 'var(--border-primary)', borderWidth: '1px' }}>
-                  
-                  {/* Background gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                  
-                  {/* Tech pattern overlay */}
-                  <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
-                    <div className="w-full h-full bg-gradient-to-br from-white to-transparent transform rotate-12 rounded-2xl" />
-                  </div>
-                  
-                  <div className="relative z-10 h-full flex flex-col">
-                    {/* Icon */}
+                {/* Compact Card */}
+                <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-300"
+                  style={{
+                    backgroundColor: 'var(--bg-primary)',
+                    borderColor: 'var(--border-primary)',
+                    borderWidth: '1px'
+                  }}>
+
+                  {/* Compact visual header */}
+                  <div className={`relative h-40 bg-gradient-to-br ${service.color} overflow-hidden`}>
+                    {/* Subtle animated pattern */}
                     <motion.div
-                      className="mb-6 md:mb-8"
-                      animate={{ 
-                        y: [0, -2, 0],
-                        rotate: [0, 1, 0]
+                      className="absolute inset-0 opacity-10"
+                      animate={{
+                        backgroundPosition: ['0% 0%', '100% 100%'],
                       }}
-                      transition={{ 
-                        duration: 4, 
-                        repeat: Infinity, 
-                        delay: index * 0.5 
+                      transition={{
+                        duration: 15,
+                        repeat: Infinity,
+                        repeatType: 'reverse'
                       }}
+                      style={{
+                        backgroundImage: `radial-gradient(circle, white 1px, transparent 1px)`,
+                        backgroundSize: '30px 30px'
+                      }}
+                    />
+
+                    {/* Decorative shape */}
+                    <div className="absolute top-3 right-3 w-20 h-20 border border-white/20 rounded-full" />
+
+                    {/* Centered icon */}
+                    <motion.div
+                      className="absolute inset-0 flex items-center justify-center"
+                      whileHover={{
+                        scale: 1.15,
+                        rotate: 5
+                      }}
+                      transition={{ duration: 0.3 }}
                     >
-                      <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${service.color} p-3 md:p-4 shadow-lg ring-1 ring-white/20 dark:ring-white/20`}>
-                        <Icon className="w-full h-full text-white drop-shadow-sm" />
+                      <div className="w-20 h-20 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30 shadow-lg">
+                        <Icon className="w-11 h-11 text-white drop-shadow-md" strokeWidth={1.5} />
                       </div>
                     </motion.div>
+                  </div>
 
-                    {/* Content */}
-                    <div className="flex-1 space-y-4 md:space-y-6">
-                      {/* Title */}
-                      <div>
-                        <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 leading-tight transition-colors duration-300 text-gray-900 dark:text-white">
-                          <span className="md:hidden">{service.shortTitle}</span>
-                          <span className="hidden md:inline">{service.title}</span>
-                        </h3>
-                        <p className="text-sm md:text-base leading-relaxed transition-colors duration-300" style={{ color: 'var(--text-secondary)' }}>
-                          {service.description}
-                        </p>
-                      </div>
-                      
-                      {/* Features */}
-                      <div className="space-y-2 md:space-y-3 pt-2">
-                        {service.features.map((feature, featureIndex) => (
-                          <motion.div
-                            key={featureIndex}
-                            className="flex items-center gap-3 text-xs md:text-sm transition-colors duration-300" style={{ color: 'var(--text-tertiary)' }}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ 
-                              delay: index * 0.15 + featureIndex * 0.08,
-                              duration: 0.4 
-                            }}
-                            viewport={{ once: true }}
-                          >
-                            <motion.div 
-                              className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.color} shadow-sm`}
-                              animate={{ 
-                                scale: [1, 1.2, 1],
-                                opacity: [0.7, 1, 0.7]
-                              }}
-                              transition={{ 
-                                duration: 2.5, 
-                                repeat: Infinity, 
-                                delay: featureIndex * 0.3 
-                              }}
-                            />
-                            <span className="flex-1">{feature}</span>
-                          </motion.div>
-                        ))}
-                      </div>
+                  {/* Content section */}
+                  <div className="p-5">
+                    {/* Title */}
+                    <h3 className="text-lg md:text-xl font-bold mb-2 leading-tight line-clamp-2"
+                      style={{ color: 'var(--text-primary)' }}>
+                      {service.shortTitle}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-sm leading-relaxed mb-4 line-clamp-2"
+                      style={{ color: 'var(--text-secondary)' }}>
+                      {service.description}
+                    </p>
+
+                    {/* Features - compact list */}
+                    <div className="space-y-2 mb-4">
+                      {service.features.slice(0, 3).map((feature, featureIndex) => (
+                        <div
+                          key={featureIndex}
+                          className="flex items-center gap-2 text-xs"
+                          style={{ color: 'var(--text-tertiary)' }}
+                        >
+                          <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.color} flex-shrink-0`} />
+                          <span className="truncate">{feature}</span>
+                        </div>
+                      ))}
                     </div>
 
-                    {/* CTA Button */}
-                    <motion.div 
-                      className="pt-4 md:pt-6 mt-auto"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ delay: index * 0.2 + 0.3 }}
-                      viewport={{ once: true }}
+                    {/* Compact CTA */}
+                    <button
+                      className={`w-full py-2.5 px-4 rounded-lg bg-gradient-to-r ${service.color} text-white font-medium text-sm shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:gap-3`}
                     >
-                      <button className="group/btn w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all duration-300 text-sm font-medium" style={{ backgroundColor: 'rgba(var(--bg-primary-rgb), 0.8)', borderColor: 'var(--border-secondary)', borderWidth: '1px', color: 'var(--text-secondary)' }}>
-                        <span>Saber Más</span>
-                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                      </button>
-                    </motion.div>
+                      <span>Ver más</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
                   </div>
 
-                  {/* Hover glow effect */}
-                  <div className={`absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none`} />
+                  {/* Accent line */}
+                  <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${service.color} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
                 </div>
               </motion.div>
             )

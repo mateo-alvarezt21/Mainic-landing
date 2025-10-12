@@ -41,14 +41,19 @@ const MobileMenuItem = memo(({ label, onClick, index }: MobileMenuItemProps) => 
     >
       <button
         onClick={onClick}
-        className="group relative block w-full text-left text-gray-900 dark:text-white font-medium py-3 px-4 rounded-lg overflow-hidden border border-transparent hover:border-primary-500/30 transition-colors duration-300"
+        className="group relative block w-full text-left font-medium py-3 px-4 rounded-lg overflow-hidden border hover:border-primary-500/30 transition-colors duration-300"
+        style={{
+          color: 'var(--text-primary)',
+          borderColor: 'var(--border-primary)'
+        }}
       >
-        <span className="relative z-10 transition-colors duration-300 group-hover:text-primary-500 dark:group-hover:text-primary-400">
+        <span className="relative z-10 transition-colors duration-300 group-hover:text-primary-500">
           {label}
         </span>
 
         <motion.div
-          className="absolute inset-0 bg-gray-200/50 dark:bg-dark-700/50"
+          className="absolute inset-0"
+          style={{ backgroundColor: 'var(--bg-tertiary)' }}
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -131,7 +136,8 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed inset-0 bg-gray-900/60 dark:bg-dark-900/60 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 backdrop-blur-sm z-40 lg:hidden"
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
             onClick={() => onNavClick('')}
           />
 
@@ -140,7 +146,8 @@ export const MobileMenu = memo(({ isOpen, navItems, onNavClick }: MobileMenuProp
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed top-[73px] left-0 right-0 z-50 lg:hidden bg-gradient-to-b from-white via-gray-50 to-white dark:from-dark-900 dark:via-dark-800 dark:to-dark-900 backdrop-blur-xl border-b border-primary-500/20 shadow-2xl shadow-primary-500/5"
+            className="fixed top-[73px] left-0 right-0 z-50 lg:hidden backdrop-blur-xl border-b border-primary-500/20 shadow-2xl shadow-primary-500/5"
+            style={{ backgroundColor: 'var(--bg-secondary)' }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-transparent pointer-events-none" />
 

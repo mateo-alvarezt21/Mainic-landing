@@ -273,7 +273,7 @@ export function Cases() {
         </motion.div>
       </div>
 
-      <div className="w-full px-4 md:px-6 relative z-10">
+      <div className="w-full px-5 sm:px-6 md:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -337,25 +337,26 @@ export function Cases() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative overflow-hidden rounded-2xl md:rounded-3xl group">
+              <div className="relative overflow-hidden rounded-2xl md:rounded-3xl">
                 <Image
-                  src={strapiStories.length > 0 
+                  src={strapiStories.length > 0
                     ? `https://strapi-core.mainics.com${(activeCases[currentCase] as TransformationStory).image.formats.medium?.url || (activeCases[currentCase] as TransformationStory).image.url}`
                     : (activeCases[currentCase] as DefaultCaseStudy).image
                   }
-                  alt={strapiStories.length > 0 
+                  alt={strapiStories.length > 0
                     ? (activeCases[currentCase] as TransformationStory).image.alternativeText || (activeCases[currentCase] as TransformationStory).titulo
                     : (activeCases[currentCase] as DefaultCaseStudy).company
                   }
-                  width={600}
-                  height={400}
-                  className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
-                  style={{ height: '380px', minHeight: '380px' }}
+                  width={strapiStories.length > 0
+                    ? (activeCases[currentCase] as TransformationStory).image.width
+                    : 600
+                  }
+                  height={strapiStories.length > 0
+                    ? (activeCases[currentCase] as TransformationStory).image.height
+                    : 400
+                  }
+                  className="w-full h-auto object-cover"
                 />
-                <div className={`absolute inset-0 bg-gradient-to-t ${strapiStories.length > 0 ? 'from-blue-500 to-purple-600' : (activeCases[currentCase] as DefaultCaseStudy).color} opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
-
-                {/* Overlay pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20" />
 
                 {/* Success badge */}
                 <div className="absolute top-4 left-4 bg-emerald-500/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-2">

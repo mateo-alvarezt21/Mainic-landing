@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useMotionValue, animate } from 'framer
 import { /* Play, */ Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 // import { getPageInfo } from '@/lib/wp' // Comentado - WordPress no disponible
 
 interface CompanyFromEndpoint {
@@ -111,7 +112,7 @@ export function Hero() {
   // }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-0">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-0 mb-10">
       {/* Multi-layer parallax background */}
       <motion.div
         className="absolute inset-0 z-0"
@@ -198,26 +199,25 @@ export function Hero() {
       </motion.div>
 
       {/* Main content */}
-      <motion.div
-        className="relative z-20 w-full px-4 sm:px-6"
-        style={{ opacity }}
-      >
-        <div className="max-w-7xl mx-auto pt-16 sm:pt-8 md:pt-0">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex justify-center mb-6 sm:mb-8"
-          >
-            <div className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-primary-500/20 border border-primary-500/30 rounded-full text-primary-300 text-xs sm:text-sm font-medium">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              <span className="whitespace-nowrap">Transformación Digital de Vanguardia</span>
-            </div>
-          </motion.div>
+      <div className="relative z-20 w-full px-5 sm:px-6 md:px-8">
+        <div className="max-w-7xl mx-auto pt-28 sm:pt-20 md:pt-0">
+          {/* Main content with fade effect */}
+          <motion.div style={{ opacity }}>
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="flex justify-center mb-6 sm:mb-8"
+            >
+              <div className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-primary-500/20 border border-primary-500/30 rounded-full text-primary-300 text-xs sm:text-sm font-medium">
+                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+                <span className="whitespace-nowrap">Transformación Digital de Vanguardia</span>
+              </div>
+            </motion.div>
 
-          {/* Main content centered */}
-          <div className="text-center max-w-5xl mx-auto">
+            {/* Main content centered */}
+            <div className="text-center max-w-5xl mx-auto">
             {/* Main heading */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -290,20 +290,15 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
-              <button
-                onClick={() => {
-                  const contactSection = document.getElementById('contact')
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
+              <Link
+                href="/bienvenida"
                 className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-3"
               >
                 <span>Comienza Hoy</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </button>
+              </Link>
               <button
                 onClick={() => {
                   const servicesSection = document.getElementById('services')
@@ -322,55 +317,56 @@ export function Hero() {
               </button>
             </motion.div>
 
-          </div>
-
-          {/* Companies that trust us */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-16 max-w-4xl mx-auto"
-          >
-            <div className="text-center mb-8">
-              <p className="text-base mb-6" style={{ color: 'var(--text-secondary)' }}>Empresas que confían en nosotros</p>
             </div>
-            <div className="flex justify-center items-center">
-              {endpointCompanies.length > 0 ? (
-                endpointCompanies.map((company, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    whileHover={{ 
-                      scale: 1.05,
-                      transition: { duration: 0.2 }
-                    }}
-                    transition={{ 
-                      duration: 0.5, 
-                      delay: 0.9 + index * 0.1 
-                    }}
-                    className="relative"
-                    title={company.name}
-                  >
-                    <Image
-                      src={company.logo}
-                      alt={company.name}
-                      width={350}
-                      height={200}
-                      className="object-contain company-logo opacity-80 hover:opacity-100 transition-opacity duration-300"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none'
+          </motion.div>
+
+          {/* Companies that trust us - No fade effect */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="mt-10  sm:mt-12 md:mt-16 max-w-4xl mx-auto"
+            >
+              <div className="text-center mb-8">
+                <p className="text-base mb-6" style={{ color: 'var(--text-secondary)' }}>Empresas que confían en nosotros</p>
+              </div>
+              <div className="flex justify-center items-center">
+                {endpointCompanies.length > 0 ? (
+                  endpointCompanies.map((company, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      whileHover={{ 
+                        scale: 1.05,
+                        transition: { duration: 0.2 }
                       }}
-                    />
-                  </motion.div>
-                ))
-              ) : (
-                <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Cargando empresas...</div>
-              )}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: 0.9 + index * 0.1 
+                      }}
+                      className="relative"
+                      title={company.name}
+                    >
+                      <Image
+                        src={company.logo}
+                        alt={company.name}
+                        width={250}
+                        height={150}
+                        className="object-contain company-logo opacity-80 hover:opacity-100 transition-opacity duration-300 w-40 sm:w-52 md:w-60 h-auto"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                        }}
+                      />
+                    </motion.div>
+                  ))
+                ) : (
+                  <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Cargando empresas...</div>
+                )}
             </div>
           </motion.div>
         </div>
-      </motion.div>
+      </div>
 
     </section>
   )

@@ -1,0 +1,33 @@
+# Robots.txt para Mainic Software Services
+# https://mainic.com
+
+# Permitir acceso a todos los bots
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://mainic.com/sitemap.xml
+
+# Rastreo optimizado para Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Permitir a Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Bloquear bots maliciosos conocidos
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Archivos que no deben ser indexados
+Disallow: /api/
+Disallow: /_next/static/

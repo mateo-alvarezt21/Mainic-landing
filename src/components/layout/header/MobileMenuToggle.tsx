@@ -10,9 +10,9 @@ export function MobileMenuToggle({ isOpen, onToggle }: MobileMenuToggleProps) {
   return (
     <motion.button
       onClick={onToggle}
-      className="lg:hidden p-2 rounded-lg hover:text-primary-500 transition-all duration-200 backdrop-blur-sm border"
-      style={{ 
-        backgroundColor: 'var(--bg-secondary)', 
+      className="lg:hidden p-2 rounded-lg hover:text-primary-500 transition-all duration-200 backdrop-blur-sm border flex-shrink-0"
+      style={{
+        backgroundColor: 'var(--bg-secondary)',
         color: 'var(--text-primary)',
         borderColor: 'var(--border-primary)'
       }}

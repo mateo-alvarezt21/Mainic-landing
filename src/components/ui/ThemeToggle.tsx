@@ -25,7 +25,7 @@ export function ThemeToggle() {
   return (
     <motion.button
       onClick={handleToggle}
-      className="relative p-2 rounded-xl bg-gray-200/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-300/50 dark:border-gray-600/50 hover:bg-gray-300/80 dark:hover:bg-gray-700/80 transition-all duration-300"
+      className="relative p-2 rounded-xl bg-gray-200/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-300/50 dark:border-gray-600/50 hover:bg-gray-300/80 dark:hover:bg-gray-700/80 transition-all duration-300 flex-shrink-0"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}

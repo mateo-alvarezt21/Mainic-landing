@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ContactForm } from '@/components/features/contact'
+import { ContactFormStepper } from '@/components/features/contact'
 import { Mail, Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
 
 const contactInfo = [
@@ -40,7 +40,7 @@ export function ContactSection() {
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-purple-500 rounded-full blur-3xl" />
         </div>
   
-        <div className="w-full px-4 sm:px-6 relative z-10">
+        <div className="w-full px-5 sm:px-6 md:px-8 relative z-10">
           <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -58,80 +58,86 @@ export function ContactSection() {
             </p>
           </motion.div>
   
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Contact Form */}
+          {/* Contact Form Stepper - Full Width */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto mb-12"
+          >
+            <ContactFormStepper />
+          </motion.div>
+
+          {/* Contact Information - Below Stepper */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="max-w-5xl mx-auto"
+          >
+            <div className="text-center mb-8">
+              <h3 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+                Otras formas de contactarnos
+              </h3>
+              <p style={{ color: 'var(--text-secondary)' }}>
+                También puedes comunicarte directamente por estos medios
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {contactInfo.map((info, index) => {
+                const Icon = info.icon
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="p-4 sm:p-6 rounded-xl border hover:border-primary-500/50 transition-all"
+                    style={{
+                      backgroundColor: 'var(--bg-primary)',
+                      borderColor: 'var(--border-primary)'
+                    }}
+                  >
+                    <div className={`${info.color} mb-4`}>
+                      <Icon className="w-6 h-6 sm:w-8 sm:h-8" />
+                    </div>
+                    <h4 className="font-semibold mb-2 text-sm sm:text-base" style={{ color: 'var(--text-primary)' }}>
+                      {info.title}
+                    </h4>
+                    {info.details.map((detail, detailIndex) => (
+                      <p key={detailIndex} className="text-sm break-words" style={{ color: 'var(--text-secondary)' }}>
+                        {detail}
+                      </p>
+                    ))}
+                  </motion.div>
+                )
+              })}
+            </div>
+
+            {/* CTA Section */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 1 }}
               viewport={{ once: true }}
+              className="mt-8 bg-gradient-to-r from-primary-500/20 to-purple-500/20 rounded-2xl p-6 sm:p-8 border border-primary-500/30 text-center"
             >
-              <ContactForm />
+              <h4 className="text-xl sm:text-2xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+                ¿Necesitas una respuesta rápida?
+              </h4>
+              <p className="mb-4 text-sm sm:text-base" style={{ color: 'var(--text-secondary)' }}>
+                Programa una llamada de 15 minutos con uno de nuestros expertos.
+              </p>
+              <button className="inline-flex items-center text-primary-400 hover:text-primary-300 font-semibold group transition-colors text-sm sm:text-base">
+                Programar Llamada
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
             </motion.div>
-  
-            {/* Contact Information */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="space-y-6 md:space-y-8"
-            >
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-bold mb-4 md:mb-6">Información de Contacto</h3>
-                <p className="text-gray-400 text-base md:text-lg mb-6 md:mb-8">
-                  Estamos aquí para ayudarte. No dudes en contactarnos por cualquiera 
-                  de estos medios.
-                </p>
-              </div>
-  
-              <div className="space-y-4 md:space-y-6">
-                {contactInfo.map((info, index) => {
-                  const Icon = info.icon
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                      viewport={{ once: true }}
-                      className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 rounded-xl bg-dark-700/50 border border-gray-600 hover:border-gray-500 transition-colors"
-                    >
-                      <div className={`${info.color} mt-1 flex-shrink-0`}>
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-white font-semibold mb-1 sm:mb-2 text-sm sm:text-base">{info.title}</h4>
-                        {info.details.map((detail, detailIndex) => (
-                          <p key={detailIndex} className="text-gray-400 text-sm sm:text-base break-words">
-                            {detail}
-                          </p>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )
-                })}
-              </div>
-  
-              {/* CTA Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 1 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-r from-primary-500/20 to-purple-500/20 rounded-2xl p-4 sm:p-6 border border-primary-500/30"
-              >
-                <h4 className="text-lg sm:text-xl font-bold mb-2">¿Necesitas una respuesta rápida?</h4>
-                <p className="text-gray-400 mb-4 text-sm sm:text-base">
-                  Programa una llamada de 15 minutos con uno de nuestros expertos.
-                </p>
-                <button className="inline-flex items-center text-primary-400 hover:text-primary-300 font-semibold group transition-colors text-sm sm:text-base">
-                  Programar Llamada
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </motion.div>
-            </motion.div>
-          </div>
+          </motion.div>
           </div>
         </div>
       </section>

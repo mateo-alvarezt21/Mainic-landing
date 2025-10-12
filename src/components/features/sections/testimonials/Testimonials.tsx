@@ -65,7 +65,7 @@ export function Testimonials() {
         <div className="absolute top-1/3 right-1/5 w-4 h-16 bg-gradient-to-b from-cyan-400 to-transparent" />
       </motion.div>
 
-      <div className="w-full px-6 relative z-10">
+      <div className="w-full px-5 sm:px-6 md:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

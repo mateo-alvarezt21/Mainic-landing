@@ -50,11 +50,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  // Avoid hydration mismatch
-  if (!mounted) {
-    return <div style={{ visibility: 'hidden' }}>{children}</div>
-  }
-
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme: setThemeValue }}>
       {children}

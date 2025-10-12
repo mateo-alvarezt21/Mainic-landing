@@ -96,8 +96,8 @@ export default function About() {
 
   return (
     <section className="py-20 relative overflow-hidden" id="about" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-      <div className="w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-5 sm:px-6 md:px-8">
+        <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
