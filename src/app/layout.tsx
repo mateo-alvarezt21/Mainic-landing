@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/contexts/ThemeContext'
-import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -108,14 +108,14 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} antialiased`} style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
-        {/* Google Analytics */}
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
-
         <ThemeProvider>
           {children}
         </ThemeProvider>
+        {/* Google Analytics - Carga después del contenido para mejor performance */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
+      </body>
         
         {/* Schema.org structured data - Organization */}
         <script
