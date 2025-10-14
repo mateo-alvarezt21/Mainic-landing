@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Cpu, Monitor, Wrench, Zap, ArrowRight, CheckCircle2, HardDrive, Fan, MemoryStick, Layers, Award, Shield, Clock, TrendingUp, Users, Target, Video, Briefcase, Code, Gauge, ThermometerSun, Cable } from 'lucide-react'
+import { ArrowLeft, Cpu, Monitor, Wrench, Zap, ArrowRight, CheckCircle2, HardDrive, Layers, Award, Shield, Clock, TrendingUp, Users, Target, Video, Briefcase, Code, Gauge } from 'lucide-react'
 
 const pcTypes = [
   {

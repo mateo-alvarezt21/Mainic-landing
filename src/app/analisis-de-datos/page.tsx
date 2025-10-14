@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, BarChart3, TrendingUp, Database, Brain, PieChart, LineChart, ArrowRight, CheckCircle2, Zap, Users, Award, Target, GitBranch, Activity, Layers, FileSearch, Table, AlertCircle, Cpu, Cloud, Lock } from 'lucide-react'
+import { ArrowLeft, BarChart3, TrendingUp, Database, Brain, PieChart, ArrowRight, CheckCircle2, Zap, Users, Award, Target, Activity, Layers, FileSearch, AlertCircle, Cpu } from 'lucide-react'
 
 const dataServices = [
   {

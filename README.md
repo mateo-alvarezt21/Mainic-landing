@@ -23,6 +23,7 @@
 - 🚀 **Alto Rendimiento**: Optimizado con Next.js 15 y Turbopack
 - 📱 **Totalmente Responsivo**: Experiencia perfecta en todos los dispositivos
 - 🌐 **SEO Optimizado**: Metadatos completos y structured data
+- 📊 **Analytics Integrado**: Google Analytics 4 con `@next/third-parties`
 - 🎭 **Animaciones Avanzadas**: Transiciones suaves con Framer Motion
 - 🔍 **TypeScript**: Código type-safe para mayor robustez
 - 🎯 **Localizado**: Optimizado para el mercado hispanohablante
@@ -41,6 +42,7 @@
 - **[Lucide React](https://lucide.dev/)** - Iconos modernos
 - **[ESLint](https://eslint.org/)** - Linting y calidad de código
 - **[Turbopack](https://turbo.build/pack)** - Bundler ultra-rápido
+- **[@next/third-parties](https://nextjs.org/docs/app/building-your-application/optimizing/third-party-libraries)** - Google Analytics optimizado
 
 ## 📁 Estructura del Proyecto
 
@@ -105,14 +107,19 @@ src/
 
 3. **Configura variables de entorno**
    ```bash
-   cp .env.example .env.local
+   cp .env.local.example .env.local
    ```
-   
+
    Edita `.env.local` con tus valores:
    ```env
-   NEXT_PUBLIC_SITE_URL=http://localhost:3000
-   # Agregar otras variables según necesites
+   # Google Analytics 4
+   NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  # Tu ID de Google Analytics
+
+   # Site Configuration
+   SITE_URL=http://localhost:3000
    ```
+
+   > 📊 **Google Analytics**: Ver [QUICK_START_ANALYTICS.md](./QUICK_START_ANALYTICS.md) para configuración completa
 
 4. **Inicia el servidor de desarrollo**
    ```bash
@@ -129,6 +136,7 @@ src/
 | `npm run build` | Construye la aplicación para producción |
 | `npm start` | Inicia servidor de producción |
 | `npm run lint` | Ejecuta ESLint para verificar calidad del código |
+| `npm run check-analytics` | Verifica configuración de Google Analytics |
 
 ## 🎨 Personalización
 
@@ -154,7 +162,31 @@ El contenido principal se encuentra en:
 
 ## 🚀 Deployment
 
-### Con Vercel (Recomendado)
+### Con CapRover (VPS)
+
+Este proyecto está desplegado en CapRover. Para configurar:
+
+1. **Push a tu repositorio**
+   ```bash
+   git push origin main
+   ```
+
+2. **Configurar variables de entorno en CapRover**
+   - Accede a CapRover Dashboard
+   - Apps → Tu aplicación → App Configs → Environmental Variables
+   - Agrega:
+     ```
+     NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+     SITE_URL=https://mainics.com
+     ```
+   - Save & Update (redeploy automático)
+
+3. **Verificar deployment**
+   ```bash
+   curl -s https://mainics.com | grep -i "gtag"
+   ```
+
+### Con Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tu-usuario/mainic-landing-page)
 
@@ -210,6 +242,20 @@ Perfectos para configuración en Coolify, Docker Compose o cualquier plataforma 
 - ✅ **Structured Data** para motores de búsqueda
 - ✅ **Lazy Loading** de imágenes
 - ✅ **Fonts** optimizados con Next.js
+- ✅ **Google Analytics 4** integrado con `@next/third-parties`
+
+### Analytics
+
+Google Analytics 4 está integrado usando el paquete oficial `@next/third-parties` de Next.js para máxima performance y optimización.
+
+**Documentación:**
+- [Inicio Rápido - Google Analytics](./QUICK_START_ANALYTICS.md)
+- [Guía Completa de Configuración](./GOOGLE_ANALYTICS_SETUP.md)
+
+**Verificación:**
+```bash
+npm run check-analytics
+```
 
 ## 🤝 Contribuir
 

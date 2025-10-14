@@ -115,8 +115,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
-      </body>
-        
+
         {/* Schema.org structured data - Organization */}
         <script
           type="application/ld+json"

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Globe, ExternalLink, Zap, TrendingUp, Users, ShoppingCart, CheckCircle2, ArrowRight, Sparkles, Monitor, Smartphone, Tablet } from 'lucide-react'
+import { ArrowLeft, Globe, Zap, TrendingUp, Users, CheckCircle2, ArrowRight, Sparkles, Monitor } from 'lucide-react'
 import Image from 'next/image'
 
 const portfolioProjects = [

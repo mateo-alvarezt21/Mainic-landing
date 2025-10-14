@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Gamepad2, Trophy, Users, Zap, Target, TrendingUp, ArrowRight, CheckCircle2, Smartphone, Monitor, Tablet, Sparkles, Award, Clock, DollarSign, Heart, Brain, BarChart3, Lightbulb, Rocket, Play } from 'lucide-react'
+import { ArrowLeft, Gamepad2, Trophy, Users, Target, TrendingUp, ArrowRight, CheckCircle2, Smartphone, Monitor, Tablet, Sparkles, Clock, DollarSign, Heart, Brain, BarChart3, Lightbulb, Rocket, Play } from 'lucide-react'
 
 const whyGamingForBusiness = [
   {

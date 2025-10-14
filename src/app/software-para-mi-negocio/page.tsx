@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Code, Smartphone, Globe, Database, Cloud, Lock, ArrowRight, CheckCircle2, Zap, Layers, GitBranch, Server, Users, TrendingUp, Award, Clock, Target } from 'lucide-react'
+import { ArrowLeft, Code, Smartphone, Globe, Database, Cloud, Lock, ArrowRight, CheckCircle2, Zap, Layers, Server, Users, TrendingUp, Award, Clock, Target } from 'lucide-react'
 
 const softwareTypes = [
   {
