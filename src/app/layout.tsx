@@ -112,9 +112,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         {/* Google Analytics - Carga después del contenido para mejor performance */}
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
+        <GoogleAnalytics gaId="G-MHYKF70S8J" />
 
         {/* Schema.org structured data - Organization */}
         <script
