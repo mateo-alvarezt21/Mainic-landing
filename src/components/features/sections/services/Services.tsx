@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Settings, Code, BarChart3, ArrowRight, Zap, Gamepad2, Cpu } from 'lucide-react'
 import { useRef } from 'react'
+import Link from 'next/link'
 
 const services = [
   {
@@ -18,7 +19,8 @@ const services = [
       'Optimización de tiempo'
     ],
     color: 'from-blue-500 to-cyan-500',
-    bgGradient: 'from-blue-500/20 to-cyan-500/20'
+    bgGradient: 'from-blue-500/20 to-cyan-500/20',
+    link: '/automatizaciones-para-su-negocio'
   },
   {
     id: 'development',
@@ -33,7 +35,8 @@ const services = [
       'Soporte continuo'
     ],
     color: 'from-purple-500 to-pink-500',
-    bgGradient: 'from-purple-500/20 to-pink-500/20'
+    bgGradient: 'from-purple-500/20 to-pink-500/20',
+    link: '/software-para-mi-negocio'
   },
   {
     id: 'analytics',
@@ -48,7 +51,8 @@ const services = [
       'Predicciones basadas en IA'
     ],
     color: 'from-emerald-500 to-teal-500',
-    bgGradient: 'from-emerald-500/20 to-teal-500/20'
+    bgGradient: 'from-emerald-500/20 to-teal-500/20',
+    link: '/analisis-de-datos'
   },
   {
     id: 'gamedev',
@@ -63,7 +67,8 @@ const services = [
       'Arte y animación'
     ],
     color: 'from-orange-500 to-red-500',
-    bgGradient: 'from-orange-500/20 to-red-500/20'
+    bgGradient: 'from-orange-500/20 to-red-500/20',
+    link: '/videojuego-para-mi-empresa'
   },
   {
     id: 'hardware',
@@ -78,7 +83,8 @@ const services = [
       'Asesoría técnica'
     ],
     color: 'from-indigo-500 to-blue-600',
-    bgGradient: 'from-indigo-500/20 to-blue-600/20'
+    bgGradient: 'from-indigo-500/20 to-blue-600/20',
+    link: '/hardware-personalizado'
   }
 ]
 
@@ -274,12 +280,23 @@ export function Services() {
                     </div>
 
                     {/* Compact CTA */}
-                    <button
-                      className={`w-full py-2.5 px-4 rounded-lg bg-gradient-to-r ${service.color} text-white font-medium text-sm shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:gap-3`}
-                    >
-                      <span>Ver más</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
+                    {service.link ? (
+                      <Link href={service.link}>
+                        <button
+                          className={`w-full py-2.5 px-4 rounded-lg bg-gradient-to-r ${service.color} text-white font-medium text-sm shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:gap-3`}
+                        >
+                          <span>Ver más</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </Link>
+                    ) : (
+                      <button
+                        className={`w-full py-2.5 px-4 rounded-lg bg-gradient-to-r ${service.color} text-white font-medium text-sm shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:gap-3`}
+                      >
+                        <span>Ver más</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                    )}
                   </div>
 
                   {/* Accent line */}

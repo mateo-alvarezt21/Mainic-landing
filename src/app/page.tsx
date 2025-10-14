@@ -1,5 +1,6 @@
 import { ClientHeader } from '@/components/layout/header/ClientHeader'
 import { Hero } from '@/components/features/sections/hero'
+import { PopularServices } from '@/components/features/sections/popular-services/PopularServices'
 import { Services } from '@/components/features/sections/services'
 import { Cases } from '@/components/features/sections/cases'
 import About from '@/components/sections/About'
@@ -26,6 +27,7 @@ export default function HomePage() {
       {/* Main content */}
       <main className="overflow-hidden">
         <Hero />
+        <PopularServices />
         <Services />
         <Cases />
         <About />
