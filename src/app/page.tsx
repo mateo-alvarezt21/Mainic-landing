@@ -1,14 +1,30 @@
+import dynamic from 'next/dynamic'
 import { ClientHeader } from '@/components/layout/header/ClientHeader'
 import { Hero } from '@/components/features/sections/hero'
 import { PopularServices } from '@/components/features/sections/popular-services/PopularServices'
-import { Services } from '@/components/features/sections/services'
-import { Cases } from '@/components/features/sections/cases'
-import About from '@/components/sections/About'
-// import { Testimonials } from '@/components/features/sections/testimonials'
-import { ContactSection } from '@/components/features/sections/contact-section'
-import { Footer } from '@/components/layout/footer'
-import { ScrollProgress } from '@/components/ui/scroll-progress'
-import { FloatingElements } from '@/components/ui/floating-elements'
+
+// Lazy load non-critical components for better performance
+const Services = dynamic(() => import('@/components/features/sections/services').then(mod => ({ default: mod.Services })), {
+  loading: () => <div className="min-h-[400px]" />
+})
+const Cases = dynamic(() => import('@/components/features/sections/cases').then(mod => ({ default: mod.Cases })), {
+  loading: () => <div className="min-h-[400px]" />
+})
+const About = dynamic(() => import('@/components/sections/About'), {
+  loading: () => <div className="min-h-[400px]" />
+})
+const ContactSection = dynamic(() => import('@/components/features/sections/contact-section').then(mod => ({ default: mod.ContactSection })), {
+  loading: () => <div className="min-h-[400px]" />
+})
+const Footer = dynamic(() => import('@/components/layout/footer').then(mod => ({ default: mod.Footer })), {
+  loading: () => <div className="min-h-[200px]" />
+})
+const ScrollProgress = dynamic(() => import('@/components/ui/scroll-progress').then(mod => ({ default: mod.ScrollProgress })), {
+  ssr: false
+})
+const FloatingElements = dynamic(() => import('@/components/ui/floating-elements').then(mod => ({ default: mod.FloatingElements })), {
+  ssr: false
+})
 
 // Metadata is now handled in layout.tsx to avoid duplication
 

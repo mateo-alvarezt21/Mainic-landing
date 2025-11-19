@@ -362,6 +362,8 @@ export function Hero() {
                         alt={company.name}
                         width={250}
                         height={150}
+                        priority={index === 0}
+                        loading={index === 0 ? undefined : "lazy"}
                         className="object-contain company-logo opacity-80 hover:opacity-100 transition-opacity duration-300 w-40 sm:w-52 md:w-60 h-auto"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none'

@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+
+  // Performance optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  // Image optimization
   images: {
     remotePatterns: [
       {
@@ -57,19 +64,24 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'upload.wikimedia.org',
-        port: '',
-        pathname: '/**',
-      },
     ],
-    formats: ['image/webp', 'image/avif'],
-    qualities: [16, 32, 48, 64, 75, 90, 100],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60,
   },
+
+  // Optimize package imports
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
+    },
+  },
+
   env: {
     SITE_URL: process.env.SITE_URL || 'http://localhost:3000',
   },
+
   ...(process.env.NODE_ENV === 'development' && {
     turbopack: {
       root: process.cwd()
