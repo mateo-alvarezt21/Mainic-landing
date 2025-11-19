@@ -19,12 +19,10 @@ const ContactSection = dynamic(() => import('@/components/features/sections/cont
 const Footer = dynamic(() => import('@/components/layout/footer').then(mod => ({ default: mod.Footer })), {
   loading: () => <div className="min-h-[200px]" />
 })
-const ScrollProgress = dynamic(() => import('@/components/ui/scroll-progress').then(mod => ({ default: mod.ScrollProgress })), {
-  ssr: false
-})
-const FloatingElements = dynamic(() => import('@/components/ui/floating-elements').then(mod => ({ default: mod.FloatingElements })), {
-  ssr: false
-})
+
+// Client-only components (decorative, can skip SSR)
+const ScrollProgress = dynamic(() => import('@/components/ui/scroll-progress').then(mod => ({ default: mod.ScrollProgress })))
+const FloatingElements = dynamic(() => import('@/components/ui/floating-elements').then(mod => ({ default: mod.FloatingElements })))
 
 // Metadata is now handled in layout.tsx to avoid duplication
 
