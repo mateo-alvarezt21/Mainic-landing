@@ -24,12 +24,26 @@ interface StrapiEmpresa {
 const fetchCompaniesFromEndpoint = async (): Promise<CompanyFromEndpoint[]> => {
   try {
     const response = await fetch('https://strapi-core.mainics.com/empresas')
+
+    if (!response.ok) {
+      console.error('Error fetching companies:', response.status)
+      return []
+    }
+
     const data: StrapiEmpresa[] = await response.json()
 
-    return data.map((empresa) => ({
-      name: empresa.Nombre,
-      logo: `https://strapi-core.mainics.com${empresa.logo.url}`
-    }))
+    if (!Array.isArray(data)) {
+      console.error('Invalid data format from API')
+      return []
+    }
+
+    // Filter out companies without valid logos
+    return data
+      .filter((empresa) => empresa?.Nombre && empresa?.logo?.url)
+      .map((empresa) => ({
+        name: empresa.Nombre,
+        logo: `https://strapi-core.mainics.com${empresa.logo.url}`
+      }))
   } catch (error) {
     console.error('Error al obtener datos de empresas:', error)
     return []
@@ -342,34 +356,38 @@ export function Hero() {
               <div className="flex justify-center items-center">
                 {endpointCompanies.length > 0 ? (
                   endpointCompanies.map((company, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      whileHover={{ 
-                        scale: 1.05,
-                        transition: { duration: 0.2 }
-                      }}
-                      transition={{ 
-                        duration: 0.5, 
-                        delay: 0.9 + index * 0.1 
-                      }}
-                      className="relative"
-                      title={company.name}
-                    >
-                      <Image
-                        src={company.logo}
-                        alt={company.name}
-                        width={250}
-                        height={150}
-                        priority={index === 0}
-                        loading={index === 0 ? undefined : "lazy"}
-                        className="object-contain company-logo opacity-80 hover:opacity-100 transition-opacity duration-300 w-40 sm:w-52 md:w-60 h-auto"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none'
+                    company?.logo && company?.name ? (
+                      <motion.div
+                        key={`${company.name}-${index}`}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        whileHover={{
+                          scale: 1.05,
+                          transition: { duration: 0.2 }
                         }}
-                      />
-                    </motion.div>
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.9 + index * 0.1
+                        }}
+                        className="relative"
+                        title={company.name}
+                      >
+                        <Image
+                          src={company.logo}
+                          alt={company.name}
+                          width={250}
+                          height={150}
+                          priority={index === 0}
+                          loading={index === 0 ? undefined : "lazy"}
+                          className="object-contain company-logo opacity-80 hover:opacity-100 transition-opacity duration-300 w-40 sm:w-52 md:w-60 h-auto"
+                          unoptimized
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            target.style.display = 'none';
+                          }}
+                        />
+                      </motion.div>
+                    ) : null
                   ))
                 ) : (
                   <div className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Cargando empresas...</div>
